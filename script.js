@@ -20,6 +20,7 @@ function goHome() {
         </div>
       `).join('')}
     </div>
+    <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="discord-button">Join Our Discord</a>
   `;
 }
 
