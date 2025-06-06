@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   goHome();
 });
 
+const currentFilter = {}; // stores active filter per dex
+
 function goHome() {
   const app = document.getElementById("app");
   app.innerHTML = `
@@ -21,16 +23,25 @@ function goHome() {
   `;
 }
 
-function renderPokedex(key) {
+function renderPokedex(key, filter = "all") {
   const pokedex = pokedexes[key];
   const app = document.getElementById("app");
+
+  currentFilter[key] = filter;
+
+  const filteredList = pokedex.data.filter(p => {
+    if (filter === "have") return p.caught;
+    if (filter === "need") return !p.caught;
+    return true;
+  });
 
   app.innerHTML = `
     <button class="back-button" onclick="goHome()">← Back</button>
     <h1>${pokedex.title} (${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
+    ${renderFilterControls(key, filter)}
     <div class="pokedex-grid">
-      ${pokedex.data.map((pokemon, index) => `
-        <div class="pokemon-card" onclick="toggleCaught('${key}', ${index})">
+      ${filteredList.map((pokemon, index) => `
+        <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${pokedex.data.indexOf(pokemon)})">
           <img src="${pokemon.img}" alt="${pokemon.name}" />
           <div>${pokemon.name}</div>
           <div>#${pokemon.number}</div>
@@ -41,10 +52,20 @@ function renderPokedex(key) {
   `;
 }
 
+function renderFilterControls(key, selected) {
+  return `
+    <div class="filter-bar">
+      <button class="${selected === 'all' ? 'active' : ''}" onclick="renderPokedex('${key}', 'all')">All</button>
+      <button class="${selected === 'have' ? 'active' : ''}" onclick="renderPokedex('${key}', 'have')">Have</button>
+      <button class="${selected === 'need' ? 'active' : ''}" onclick="renderPokedex('${key}', 'need')">Need</button>
+    </div>
+  `;
+}
+
 function toggleCaught(key, index) {
   pokedexes[key].data[index].caught = !pokedexes[key].data[index].caught;
   saveCaughtStatus();
-  renderPokedex(key); // Re-render
+  renderPokedex(key, currentFilter[key]);
 }
 
 function getCaughtCount(pokemonList) {
@@ -57,7 +78,6 @@ function getPercentage(pokemonList) {
   return ((caught / total) * 100).toFixed(2);
 }
 
-// 🧠 LocalStorage Persistence
 const STORAGE_KEY = "pokemonCaughtStatus";
 
 function saveCaughtStatus() {

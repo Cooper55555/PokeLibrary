@@ -1,89 +1,128 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f5f5;
   margin: 0;
   padding: 0;
-}
-
-main {
-  padding: 20px;
+  color: #333;
 }
 
 h1 {
-  font-size: 24px;
+  text-align: center;
+  margin-top: 30px;
   margin-bottom: 20px;
+  font-size: 50px;
 }
 
 .collections {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
+  padding: 2rem;
 }
 
 .collection-card {
-  display: flex;
-  align-items: center;
-  background: white;
+  background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   padding: 1rem;
+  width: 200px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
 }
 
 .collection-card:hover {
-  transform: translateY(-2px);
-  background-color: #f7f7f7;
+  transform: translateY(-5px);
 }
 
 .card-icon {
   font-size: 2rem;
-  margin-right: 1rem;
+  text-align: center;
 }
 
-.card-content h2 {
-  margin: 0;
-}
-
-.card-content p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: gray;
+.card-content {
+  text-align: center;
 }
 
 .back-button {
-  margin-bottom: 20px;
-  background-color: #444;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #333;
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem auto;
+}
+
+.filter-bar button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.filter-bar button.active,
+.filter-bar button:hover {
+  background-color: #555;
+  color: white;
 }
 
 .pokedex-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .pokemon-card {
-  background: #d5f6f4;
-  border-radius: 12px;
-  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   text-align: center;
+  cursor: pointer;
   position: relative;
+  transition: box-shadow 0.2s ease;
+}
+
+.pokemon-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .pokemon-card img {
   width: 80px;
   height: 80px;
+  object-fit: contain;
 }
 
-.pokemon-card .checkmark {
+.pokemon-card.caught {
+  background-color: #555;
+  color: white;
+}
+
+.checkmark {
   position: absolute;
   top: 8px;
   right: 8px;
-  color: green;
   font-size: 1.2rem;
+  color: green;
+}
+
+@media (max-width: 750px) {
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 40px;
+  }
 }
