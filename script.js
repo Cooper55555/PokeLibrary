@@ -20,7 +20,10 @@ function goHome() {
         </div>
       `).join('')}
     </div>
-    <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="discord-button">Join Our Discord</a>
+      <div class="button-container">
+        <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="discord-button">Join Our Discord</a>
+        <a href="https://median.co/share/epqmyo#apk" target="_blank" class="app-button">Download App APK</a>
+    </div>
   `;
 }
 
