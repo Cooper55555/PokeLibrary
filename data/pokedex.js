@@ -2725,7 +2725,7 @@ const pokedexes = {
   },
   dynamax: {
     title: "Dynamax Pokedex",
-    total: 61,
+    total: 42,
     data: [
 { name: "Bulbasaur", number: "001D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
 { name: "Ivysaur", number: "002D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
