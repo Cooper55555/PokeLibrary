@@ -24,7 +24,7 @@ const currentSearch = {};
 function goHome() {
   const app = document.getElementById("app");
   app.innerHTML = `
-    <h1>Collections</h1>
+    <h1>Pokemon Go Collections</h1>
     <div class="collections">
       ${Object.entries(pokedexes).map(([key, dex]) => `
         <div class="collection-card" onclick="renderPokedex('${key}')">
