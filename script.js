@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   goHome();
 });
 
-const currentFilter = {}; // stores active filter per dex
+const currentFilter = {};
+const currentSearch = {};
 
 function goHome() {
   const app = document.getElementById("app");
@@ -20,7 +21,7 @@ function goHome() {
         </div>
       `).join('')}
     </div>
-      <div class="button-container">
+    <div class="button-container">
         <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="discord-button">Join Our Discord</a>
         <a href="https://median.co/share/rrabnz#apk" target="_blank" class="app-button">Download App APK</a>
     </div>
@@ -32,17 +33,21 @@ function renderPokedex(key, filter = "all") {
   const app = document.getElementById("app");
 
   currentFilter[key] = filter;
+  const searchTerm = currentSearch[key]?.toLowerCase() || "";
 
   const filteredList = pokedex.data.filter(p => {
-    if (filter === "have") return p.caught;
-    if (filter === "need") return !p.caught;
-    return true;
+    const matchesFilter = filter === "have" ? p.caught : filter === "need" ? !p.caught : true;
+    const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.number.includes(searchTerm);
+    return matchesFilter && matchesSearch;
   });
 
   app.innerHTML = `
     <button class="back-button" onclick="goHome()">← Back</button>
     <h1>${pokedex.title} (${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
     ${renderFilterControls(key, filter)}
+    <div class="search-bar">
+      <input id="search-${key}" type="text" placeholder="Search Pokémon..." />
+    </div>
     <div class="pokedex-grid">
       ${filteredList.map((pokemon, index) => `
         <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${pokedex.data.indexOf(pokemon)})">
@@ -54,6 +59,15 @@ function renderPokedex(key, filter = "all") {
       `).join('')}
     </div>
   `;
+
+  const searchInput = document.getElementById(`search-${key}`);
+  searchInput.value = currentSearch[key] || "";
+  searchInput.addEventListener("input", (e) => {
+    currentSearch[key] = e.target.value;
+    renderPokedex(key, currentFilter[key]);
+  });
+
+  searchInput.focus();
 }
 
 function renderFilterControls(key, selected) {
