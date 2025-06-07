@@ -2775,18 +2775,18 @@ const pokedexes = {
     title: "Gigantamax Pokedex",
     total: 12,
     data: [
-{ name: "Venusaur", number: "003G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png", caught: false },
-{ name: "Charizard", number: "006G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png", caught: false },
-{ name: "Blastoise", number: "009G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png", caught: false },
-{ name: "Machamp", number: "068G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/068.png", caught: false },
-{ name: "Gengar", number: "094G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/094.png", caught: false },
-{ name: "Kingler", number: "099G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/099.png", caught: false },
-{ name: "Lapras", number: "131G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/131.png", caught: false },
-{ name: "Snorlax", number: "143G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/143.png", caught: false },
-{ name: "Rillaboom", number: "812G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/812.png", caught: false },
-{ name: "Cinderace", number: "815G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/815.png", caught: false },
-{ name: "Inteleon", number: "818G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/818.png", caught: false },
-{ name: "Toxtricity", number: "849G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/849.png", caught: false }
+{ name: "Venusaur", number: "003G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003_f3.png", caught: false },
+{ name: "Charizard", number: "006G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006_f3.png", caught: false },
+{ name: "Blastoise", number: "009G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009_f3.png", caught: false },
+{ name: "Machamp", number: "068G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/068_f2.png", caught: false },
+{ name: "Gengar", number: "094G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/094_f3.png", caught: false },
+{ name: "Kingler", number: "099G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/099_f2.png", caught: false },
+{ name: "Lapras", number: "131G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/131_f2.png", caught: false },
+{ name: "Snorlax", number: "143G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/143_f2.png", caught: false },
+{ name: "Rillaboom", number: "812G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/812_f2.png", caught: false },
+{ name: "Cinderace", number: "815G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/815_f2.png", caught: false },
+{ name: "Inteleon", number: "818G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/818_f2.png", caught: false },
+{ name: "Toxtricity", number: "849G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/849_f3.png", caught: false }
     ]
   },
 };
