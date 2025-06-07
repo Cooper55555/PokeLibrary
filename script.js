@@ -82,9 +82,13 @@ function renderFilterControls(key, selected) {
 }
 
 function toggleCaught(key, index) {
+  const scrollY = window.scrollY;
+
   pokedexes[key].data[index].caught = !pokedexes[key].data[index].caught;
   saveCaughtStatus();
   renderPokedex(key, currentFilter[key]);
+
+  setTimeout(() => window.scrollTo(0, scrollY), 0);
 }
 
 function getCaughtCount(pokemonList) {
