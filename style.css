@@ -106,8 +106,7 @@ h1 {
 }
 
 .pokemon-card.caught {
-  background-color: #555;
-  color: white;
+  background-color: lightgreen;
 }
 
 .checkmark {
