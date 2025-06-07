@@ -44,20 +44,23 @@ function renderPokedex(key, filter = "all") {
   app.innerHTML = `
     <button class="back-button" onclick="goHome()">← Back</button>
     <h1>${pokedex.title}</h1>
-    <h1>(${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
+    <h1 id="caught-counter">(${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
     ${renderFilterControls(key, filter)}
     <div class="search-bar">
       <input id="search-${key}" type="text" placeholder="Search Pokémon..." />
     </div>
     <div class="pokedex-grid">
-      ${filteredList.map((pokemon, index) => `
-        <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${pokedex.data.indexOf(pokemon)})">
-          <img src="${pokemon.img}" alt="${pokemon.name}" />
-          <div>${pokemon.name}</div>
-          <div>#${pokemon.number}</div>
-          ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
-        </div>
-      `).join('')}
+      ${filteredList.map((pokemon, displayIndex) => {
+        const globalIndex = pokedex.data.indexOf(pokemon);
+        return `
+          <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${globalIndex}, this)">
+            <img src="${pokemon.img}" alt="${pokemon.name}" />
+            <div>${pokemon.name}</div>
+            <div>#${pokemon.number}</div>
+            ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
+          </div>
+        `;
+      }).join('')}
     </div>
   `;
 
@@ -81,14 +84,27 @@ function renderFilterControls(key, selected) {
   `;
 }
 
-function toggleCaught(key, index) {
-  const scrollY = window.scrollY;
-
-  pokedexes[key].data[index].caught = !pokedexes[key].data[index].caught;
+// ✅ Optimized toggleCaught to update DOM directly without re-rendering
+function toggleCaught(key, index, cardElement) {
+  const pokemon = pokedexes[key].data[index];
+  pokemon.caught = !pokemon.caught;
   saveCaughtStatus();
-  renderPokedex(key, currentFilter[key]);
 
-  setTimeout(() => window.scrollTo(0, scrollY), 0);
+  // Update card visually
+  if (pokemon.caught) {
+    cardElement.classList.add('caught');
+    if (!cardElement.querySelector(".checkmark")) {
+      cardElement.innerHTML += `<div class="checkmark">✔️</div>`;
+    }
+  } else {
+    cardElement.classList.remove('caught');
+    const check = cardElement.querySelector(".checkmark");
+    if (check) check.remove();
+  }
+
+  // Update the counter at the top
+  const counter = document.getElementById("caught-counter");
+  counter.textContent = `(${getCaughtCount(pokedexes[key].data)} / ${pokedexes[key].total})`;
 }
 
 function getCaughtCount(pokemonList) {
