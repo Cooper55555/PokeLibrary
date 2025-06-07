@@ -13,6 +13,11 @@ h1 {
   font-size: 50px;
 }
 
+h5 {
+  text-align: center;
+  margin: 15px;
+}
+
 .collections {
   display: flex;
   flex-wrap: wrap;
@@ -116,7 +121,7 @@ h1 {
   font-size: 1.2rem;
   color: green;
 }
-
+.copyright-container,
 .button-container {
   display: flex;
   justify-content: center;
