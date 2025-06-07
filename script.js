@@ -43,7 +43,8 @@ function renderPokedex(key, filter = "all") {
 
   app.innerHTML = `
     <button class="back-button" onclick="goHome()">← Back</button>
-    <h1>${pokedex.title} (${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
+    <h1>${pokedex.title}</h1>
+    <h1>(${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
     ${renderFilterControls(key, filter)}
     <div class="search-bar">
       <input id="search-${key}" type="text" placeholder="Search Pokémon..." />
