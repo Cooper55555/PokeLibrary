@@ -1,4 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
+  for (const [key, pokedex] of Object.entries(pokedexes)) {
+    let regionBreaks;
+
+    if (key === "dynamax") {
+      regionBreaks = REGION_BREAKS_DYNAMAX;
+    } else if (key === "gigantamax") {
+      regionBreaks = REGION_BREAKS_GIGANTAMAX;
+    } else if (key === "mega") {
+      regionBreaks = REGION_BREAKS_MEGA;
+    } else {
+      regionBreaks = REGION_BREAKS_STANDARD;
+    }
+
+    insertRegionTitles(pokedex, regionBreaks);
+  }
   loadCaughtStatus();
   goHome();
 });
@@ -36,6 +51,7 @@ function renderPokedex(key, filter = "all") {
   const searchTerm = currentSearch[key]?.toLowerCase() || "";
 
   const filteredList = pokedex.data.filter(p => {
+    if (p.isRegionTitle) return true;
     const matchesFilter = filter === "have" ? p.caught : filter === "need" ? !p.caught : true;
     const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.number.includes(searchTerm);
     return matchesFilter && matchesSearch;
@@ -51,6 +67,9 @@ function renderPokedex(key, filter = "all") {
     </div>
     <div class="pokedex-grid">
       ${filteredList.map((pokemon, displayIndex) => {
+        if (pokemon.isRegionTitle) {
+          return `<div class="region-title">${pokemon.name}</div>`;
+        }
         const globalIndex = pokedex.data.indexOf(pokemon);
         return `
           <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${globalIndex}, this)">
@@ -70,8 +89,6 @@ function renderPokedex(key, filter = "all") {
     currentSearch[key] = e.target.value;
     renderPokedex(key, currentFilter[key]);
   });
-
-  searchInput.focus();
 }
 
 function renderFilterControls(key, selected) {
@@ -84,13 +101,13 @@ function renderFilterControls(key, selected) {
   `;
 }
 
-// ✅ Optimized toggleCaught to update DOM directly without re-rendering
 function toggleCaught(key, index, cardElement) {
   const pokemon = pokedexes[key].data[index];
+  if (pokemon.isRegionTitle) return;
+
   pokemon.caught = !pokemon.caught;
   saveCaughtStatus();
 
-  // Update card visually
   if (pokemon.caught) {
     cardElement.classList.add('caught');
     if (!cardElement.querySelector(".checkmark")) {
@@ -102,7 +119,6 @@ function toggleCaught(key, index, cardElement) {
     if (check) check.remove();
   }
 
-  // Update the counter at the top
   const counter = document.getElementById("caught-counter");
   counter.textContent = `(${getCaughtCount(pokedexes[key].data)} / ${pokedexes[key].total})`;
 }
@@ -112,7 +128,7 @@ function getCaughtCount(pokemonList) {
 }
 
 function getPercentage(pokemonList) {
-  const total = pokemonList.length;
+  const total = pokemonList.filter(p => !p.isRegionTitle).length;
   const caught = getCaughtCount(pokemonList);
   return ((caught / total) * 100).toFixed(2);
 }
@@ -122,7 +138,7 @@ const STORAGE_KEY = "pokemonCaughtStatus";
 function saveCaughtStatus() {
   const status = {};
   for (const [dexKey, dex] of Object.entries(pokedexes)) {
-    status[dexKey] = dex.data.map(p => p.caught);
+    status[dexKey] = dex.data.map(p => p.isRegionTitle ? null : p.caught);
   }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(status));
 }
@@ -134,8 +150,60 @@ function loadCaughtStatus() {
   for (const [dexKey, caughtArray] of Object.entries(status)) {
     if (pokedexes[dexKey]) {
       pokedexes[dexKey].data.forEach((p, i) => {
-        p.caught = caughtArray[i] ?? false;
+        if (!p.isRegionTitle) {
+          p.caught = caughtArray[i] ?? false;
+        }
       });
     }
   }
+}
+
+const REGION_BREAKS_STANDARD = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 151 },
+  { name: "Hoenn", index: 251 },
+  { name: "Sinnoh", index: 386 },
+  { name: "Unova", index: 493 },
+  { name: "Kalos", index: 649 },
+  { name: "Alola", index: 721 },
+  { name: "Galar", index: 807 },
+  { name: "Hisui", index: 896 },
+  { name: "Paldea", index: 903 },
+  { name: "Unidentified", index: 1004 },
+];
+
+const REGION_BREAKS_DYNAMAX = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 14 },
+  { name: "Hoenn", index: 17 },
+  { name: "Unova", index: 20 },
+  { name: "Galar", index: 25 },
+];
+
+const REGION_BREAKS_GIGANTAMAX = [
+  { name: "Kanto", index: 0 },
+  { name: "Galar", index: 8 },
+];
+
+const REGION_BREAKS_MEGA = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 13 },
+  { name: "Hoenn", index: 19 },
+  { name: "Sinnoh", index: 35 },
+  { name: "Kalos", index: 38 },
+];
+
+function insertRegionTitles(pokedex, regionBreaks) {
+  const clonedData = [...pokedex.data];
+  regionBreaks.slice().reverse().forEach(({ name, index }) => {
+    if (index <= clonedData.length) {
+      clonedData.splice(index, 0, {
+        name: `${name} Region`,
+        number: "",
+        img: "",
+        isRegionTitle: true,
+      });
+    }
+  });
+  pokedex.data = clonedData;
 }

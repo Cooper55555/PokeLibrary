@@ -178,6 +178,16 @@ h1 {
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
+.region-title {
+  font-size: 3.2em;
+  font-weight: bold;
+  padding: 12px;
+  grid-column: 1 / -1;
+  background-color: #f4f4f4;
+  text-align: left;
+  border-left: 4px solid #333;
+}
+
 @media (max-width: 750px) {
   h1 {
     text-align: center;
@@ -195,5 +205,15 @@ h1 {
   .app-button {
     width: 70%;
     max-width: none;
+  }
+
+  .region-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 12px;
+  grid-column: 1 / -1;
+  background-color: #f4f4f4;
+  text-align: left;
+  border-left: 4px solid #333;
   }
 }
