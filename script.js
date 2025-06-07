@@ -85,9 +85,20 @@ function renderPokedex(key, filter = "all") {
 
   const searchInput = document.getElementById(`search-${key}`);
   searchInput.value = currentSearch[key] || "";
+
   searchInput.addEventListener("input", (e) => {
-    currentSearch[key] = e.target.value;
+    const input = e.target;
+    const value = input.value;
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
+
+    currentSearch[key] = value;
     renderPokedex(key, currentFilter[key]);
+
+    // Restore focus and caret position after re-render
+    const newInput = document.getElementById(`search-${key}`);
+    newInput.focus();
+    newInput.setSelectionRange(start, end);
   });
 }
 
