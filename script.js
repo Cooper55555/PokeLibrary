@@ -115,21 +115,37 @@ function renderPokedex(key, filter = "all") {
       <input id="search-${key}" type="text" placeholder="${pokedexes[key] ? 'Search Pokémon...' : 'Search Medal...'}" />
     </div>
     <div class="pokedex-grid">
-      ${filteredList.map((pokemon) => {
+      ${filteredList.map((pokemon, i) => {
         if (pokemon.isRegionTitle) {
           return `<div class="region-title">${pokemon.name}</div>`;
         }
-        return `
-          <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', '${pokemon.number}', this)">
-            <img src="${pokemon.img}" alt="${pokemon.name}" />
-            <div>${pokemon.name}</div>
-            <div>${pokedexes[key] ? `#${pokemon.number}` : pokemon.number}</div>
-            ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
-            <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', '${pokemon.number}', this)">
-              ${pokemon.favorite ? '🌝' : '🌚'}
+        if (medals[key]) {
+          // For medals, use index for uniqueness
+          return `
+            <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${i}, this)">
+              <img src="${pokemon.img}" alt="${pokemon.name}" />
+              <div>${pokemon.name}</div>
+              <div>${pokemon.number}</div>
+              ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
+              <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', ${i}, this)">
+                ${pokemon.favorite ? '🌝' : '🌚'}
+              </div>
             </div>
-          </div>
-        `;
+          `;
+        } else {
+          // For pokedexes, use number for uniqueness
+          return `
+            <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', '${pokemon.number}', this)">
+              <img src="${pokemon.img}" alt="${pokemon.name}" />
+              <div>${pokemon.name}</div>
+              <div>#${pokemon.number}</div>
+              ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
+              <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', '${pokemon.number}', this)">
+                ${pokemon.favorite ? '🌝' : '🌚'}
+              </div>
+            </div>
+          `;
+        }
       }).join('')}
     </div>
   `;
@@ -163,9 +179,17 @@ function renderFilterControls(key, selected) {
   `;
 }
 
-function toggleCaught(key, number, cardElement) {
-  const pokedex = pokedexes[key] || medals[key];
-  const pokemon = pokedex.data.find(p => p.number === number && !p.isRegionTitle);
+function toggleCaught(key, id, cardElement) {
+  const dex = pokedexes[key] || medals[key];
+  let pokemon;
+
+  if (medals[key]) {
+    // id is index for medals
+    pokemon = dex.data[id];
+  } else {
+    // id is number for pokedexes
+    pokemon = dex.data.find(p => p.number === id && !p.isRegionTitle);
+  }
   if (!pokemon) return;
 
   pokemon.caught = !pokemon.caught;
@@ -180,12 +204,19 @@ function toggleCaught(key, number, cardElement) {
   }
 
   const counter = document.getElementById("caught-counter");
-  counter.textContent = `(${getCaughtCount(pokedex.data)} / ${pokedex.total})`;
+  counter.textContent = `(${getCaughtCount(dex.data)} / ${dex.total})`;
 }
 
-function toggleFavorite(key, number, iconElement) {
-  const pokedex = pokedexes[key] || medals[key];
-  const pokemon = pokedex.data.find(p => p.number === number && !p.isRegionTitle);
+function toggleFavorite(key, id, iconElement) {
+  const dex = pokedexes[key] || medals[key];
+  let pokemon;
+
+  if (medals[key]) {
+    // id is index for medals
+    pokemon = dex.data[id];
+  } else {
+    pokemon = dex.data.find(p => p.number === id && !p.isRegionTitle);
+  }
   if (!pokemon) return;
 
   pokemon.favorite = !pokemon.favorite;
@@ -222,9 +253,11 @@ function saveCaughtStatus() {
 
   for (const [medalKey, dex] of Object.entries(medals)) {
     status[medalKey] = {};
-    dex.data.forEach(p => {
+    dex.data.forEach((p, i) => {
       if (!p.isRegionTitle) {
-        status[medalKey][p.number] = {
+        // Use index-based key for medals, to handle duplicate numbers
+        const uniqueKey = `${medalKey}_${i}`;
+        status[medalKey][uniqueKey] = {
           caught: !!p.caught,
           favorite: !!p.favorite
         };
@@ -245,11 +278,24 @@ function loadCaughtStatus() {
     const dex = pokedexes[dexKey] || medals[dexKey];
     if (!dex) continue;
 
-    dex.data.forEach(p => {
-      if (!p.isRegionTitle && savedMap[p.number]) {
-        const savedObj = savedMap[p.number];
-        p.caught = savedObj.caught ?? false;
-        p.favorite = savedObj.favorite ?? false;
+    dex.data.forEach((p, i) => {
+      if (!p.isRegionTitle) {
+        if (medals[dexKey]) {
+          // medals use index-based key
+          const uniqueKey = `${dexKey}_${i}`;
+          const savedObj = savedMap[uniqueKey];
+          if (savedObj) {
+            p.caught = savedObj.caught ?? false;
+            p.favorite = savedObj.favorite ?? false;
+          }
+        } else {
+          // pokedex use number key
+          const savedObj = savedMap[p.number];
+          if (savedObj) {
+            p.caught = savedObj.caught ?? false;
+            p.favorite = savedObj.favorite ?? false;
+          }
+        }
       }
     });
   }
