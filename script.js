@@ -55,13 +55,20 @@ function renderPokedex(key, filter = "all") {
 
   const filteredList = pokedex.data.filter(p => {
     if (p.isRegionTitle) return true;
-    const matchesFilter = filter === "have" ? p.caught : filter === "need" ? !p.caught : true;
+    const matchesFilter =
+      filter === "have" ? p.caught :
+      filter === "need" ? !p.caught :
+      filter === "favorite" ? p.favorite :
+      true;
     const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.number.includes(searchTerm);
     return matchesFilter && matchesSearch;
   });
 
   app.innerHTML = `
-    <button class="back-button" onclick="goHome()">← Back</button>
+    <div class="top-bar">
+      <button class="back-button" onclick="goHome()">← Back</button>
+      <button class="download-button" onclick="downloadPDF('${key}')">Download PDF</button>
+    </div>
     <h1>${pokedex.title}</h1>
     <h1 id="caught-counter">(${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
     ${renderFilterControls(key, filter)}
@@ -80,6 +87,9 @@ function renderPokedex(key, filter = "all") {
             <div>${pokemon.name}</div>
             <div>#${pokemon.number}</div>
             ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
+            <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', ${globalIndex}, this)">
+              ${pokemon.favorite ? '🌝' : '🌚'}
+            </div>
           </div>
         `;
       }).join('')}
@@ -98,7 +108,6 @@ function renderPokedex(key, filter = "all") {
     currentSearch[key] = value;
     renderPokedex(key, currentFilter[key]);
 
-    // Restore focus and caret position after re-render
     const newInput = document.getElementById(`search-${key}`);
     newInput.focus();
     newInput.setSelectionRange(start, end);
@@ -111,6 +120,7 @@ function renderFilterControls(key, selected) {
       <button class="${selected === 'all' ? 'active' : ''}" onclick="renderPokedex('${key}', 'all')">All</button>
       <button class="${selected === 'have' ? 'active' : ''}" onclick="renderPokedex('${key}', 'have')">Have</button>
       <button class="${selected === 'need' ? 'active' : ''}" onclick="renderPokedex('${key}', 'need')">Need</button>
+      <button class="${selected === 'favorite' ? 'active' : ''}" onclick="renderPokedex('${key}', 'favorite')">Favorite</button>
     </div>
   `;
 }
@@ -137,6 +147,15 @@ function toggleCaught(key, index, cardElement) {
   counter.textContent = `(${getCaughtCount(pokedexes[key].data)} / ${pokedexes[key].total})`;
 }
 
+function toggleFavorite(key, index, iconElement) {
+  const pokemon = pokedexes[key].data[index];
+  if (pokemon.isRegionTitle) return;
+
+  pokemon.favorite = !pokemon.favorite;
+  iconElement.innerHTML = pokemon.favorite ? '🌝' : '🌚';
+  saveCaughtStatus();
+}
+
 function getCaughtCount(pokemonList) {
   return pokemonList.filter(p => p.caught).length;
 }
@@ -152,7 +171,9 @@ const STORAGE_KEY = "pokemonCaughtStatus";
 function saveCaughtStatus() {
   const status = {};
   for (const [dexKey, dex] of Object.entries(pokedexes)) {
-    status[dexKey] = dex.data.map(p => p.isRegionTitle ? null : p.caught);
+    status[dexKey] = dex.data.map(p =>
+      p.isRegionTitle ? null : { caught: p.caught, favorite: p.favorite }
+    );
   }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(status));
 }
@@ -161,11 +182,13 @@ function loadCaughtStatus() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (!saved) return;
   const status = JSON.parse(saved);
-  for (const [dexKey, caughtArray] of Object.entries(status)) {
+  for (const [dexKey, savedArray] of Object.entries(status)) {
     if (pokedexes[dexKey]) {
       pokedexes[dexKey].data.forEach((p, i) => {
         if (!p.isRegionTitle) {
-          p.caught = caughtArray[i] ?? false;
+          const savedObj = savedArray[i] ?? {};
+          p.caught = savedObj.caught ?? false;
+          p.favorite = savedObj.favorite ?? false;
         }
       });
     }
@@ -220,4 +243,41 @@ function insertRegionTitles(pokedex, regionBreaks) {
     }
   });
   pokedex.data = clonedData;
+}
+
+function downloadPDF(key) {
+  const pokedex = pokedexes[key];
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF();
+  let y = 10;
+
+  doc.setFontSize(16);
+  doc.text(`${pokedex.title} Collection`, 10, y);
+  y += 10;
+
+  pokedex.data.forEach(p => {
+    if (p.isRegionTitle) {
+      doc.setFontSize(14);
+      doc.text(p.name, 10, y);
+      y += 8;
+    } else {
+      let line = `#${p.number} ${p.name}`;
+      const tags = [];
+      if (p.caught) tags.push("[Caught]");
+      if (p.favorite) tags.push("[Favorite]");
+      if (tags.length) line += ` ${tags.join(" ")}`;
+
+      doc.setFontSize(12);
+      doc.text(line, 10, y);
+      y += 7;
+    }
+
+    if (y > 280) {
+      doc.addPage();
+      y = 10;
+    }
+  });
+
+  doc.save(`${pokedex.title.replace(/\s+/g, "_")}.pdf`);
 }
