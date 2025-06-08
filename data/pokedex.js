@@ -4294,4 +4294,18 @@ const medals = {
       { name: "Unique Vivillan Patterns Caught", number: "18", img: "https://static.wikia.nocookie.net/pokemongo/images/9/98/VivillonCollector_Platinum.png", caught: false },
     ]
   },
+    traveling: {
+    title: "Traveling Medals",
+    total: 8,
+    data: [
+      { name: "Kilometers Walked", number: "10", img: "https://static.wikia.nocookie.net/pokemongo/images/a/a0/Jogger_Bronze.png", caught: false },
+      { name: "Kilometers Walked", number: "100", img: "https://static.wikia.nocookie.net/pokemongo/images/f/f2/Jogger_Silver.png", caught: false },
+      { name: "Kilometers Walked", number: "1000", img: "https://static.wikia.nocookie.net/pokemongo/images/9/98/Jogger_Gold.png", caught: false },
+      { name: "Kilometers Walked", number: "10000", img: "https://static.wikia.nocookie.net/pokemongo/images/4/48/Jogger_Platinum.png", caught: false },
+      { name: "Pokémon Eggs Hatched", number: "10", img: "https://static.wikia.nocookie.net/pokemongo/images/d/dc/Breeder_Bronze.png", caught: false },
+      { name: "Pokémon Eggs Hatched", number: "100", img: "https://static.wikia.nocookie.net/pokemongo/images/0/08/Breeder_Silver.png", caught: false },
+      { name: "Pokémon Eggs Hatched", number: "500", img: "https://static.wikia.nocookie.net/pokemongo/images/b/b7/Breeder_Gold.png", caught: false },
+      { name: "Pokémon Eggs Hatched", number: "2500", img: "https://static.wikia.nocookie.net/pokemongo/images/b/b8/Breeder_Platinum.png", caught: false },
+    ]
+  },
 };
