@@ -18,9 +18,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     insertRegionTitles(pokedex, regionBreaks);
   }
+
   loadCaughtStatus();
   goHome();
 });
+
+function insertRegionTitles(pokedex, regionBreaks) {
+  const clonedData = [...pokedex.data];
+  regionBreaks
+    .filter(({ index }) => index <= clonedData.length)
+    .slice()
+    .reverse()
+    .forEach(({ name, index }) => {
+      clonedData.splice(index, 0, {
+        name: `${name} Region`,
+        number: "",
+        img: "",
+        isRegionTitle: true,
+      });
+    });
+  pokedex.data = clonedData;
+}
 
 const currentFilter = {};
 const currentSearch = {};
@@ -97,18 +115,17 @@ function renderPokedex(key, filter = "all") {
       <input id="search-${key}" type="text" placeholder="${pokedexes[key] ? 'Search Pokémon...' : 'Search Medal...'}" />
     </div>
     <div class="pokedex-grid">
-      ${filteredList.map((pokemon, displayIndex) => {
+      ${filteredList.map((pokemon) => {
         if (pokemon.isRegionTitle) {
           return `<div class="region-title">${pokemon.name}</div>`;
         }
-        const globalIndex = pokedex.data.indexOf(pokemon);
         return `
-          <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${globalIndex}, this)">
+          <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', '${pokemon.number}', this)">
             <img src="${pokemon.img}" alt="${pokemon.name}" />
             <div>${pokemon.name}</div>
             <div>${pokedexes[key] ? `#${pokemon.number}` : pokemon.number}</div>
             ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
-            <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', ${globalIndex}, this)">
+            <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', '${pokemon.number}', this)">
               ${pokemon.favorite ? '🌝' : '🌚'}
             </div>
           </div>
@@ -146,33 +163,30 @@ function renderFilterControls(key, selected) {
   `;
 }
 
-function toggleCaught(key, index, cardElement) {
+function toggleCaught(key, number, cardElement) {
   const pokedex = pokedexes[key] || medals[key];
-  const pokemon = pokedex.data[index];
-  if (pokemon.isRegionTitle) return;
+  const pokemon = pokedex.data.find(p => p.number === number && !p.isRegionTitle);
+  if (!pokemon) return;
 
   pokemon.caught = !pokemon.caught;
   saveCaughtStatus();
 
-  if (pokemon.caught) {
-    cardElement.classList.add('caught');
-    if (!cardElement.querySelector(".checkmark")) {
-      cardElement.innerHTML += `<div class="checkmark">✔️</div>`;
-    }
-  } else {
-    cardElement.classList.remove('caught');
-    const check = cardElement.querySelector(".checkmark");
-    if (check) check.remove();
+  cardElement.classList.toggle('caught');
+  const checkmark = cardElement.querySelector(".checkmark");
+  if (pokemon.caught && !checkmark) {
+    cardElement.innerHTML += `<div class="checkmark">✔️</div>`;
+  } else if (!pokemon.caught && checkmark) {
+    checkmark.remove();
   }
 
   const counter = document.getElementById("caught-counter");
   counter.textContent = `(${getCaughtCount(pokedex.data)} / ${pokedex.total})`;
 }
 
-function toggleFavorite(key, index, iconElement) {
+function toggleFavorite(key, number, iconElement) {
   const pokedex = pokedexes[key] || medals[key];
-  const pokemon = pokedex.data[index];
-  if (pokemon.isRegionTitle) return;
+  const pokemon = pokedex.data.find(p => p.number === number && !p.isRegionTitle);
+  if (!pokemon) return;
 
   pokemon.favorite = !pokemon.favorite;
   iconElement.innerHTML = pokemon.favorite ? '🌝' : '🌚';
@@ -193,41 +207,51 @@ const STORAGE_KEY = "pokemonCaughtStatus";
 
 function saveCaughtStatus() {
   const status = {};
+
   for (const [dexKey, dex] of Object.entries(pokedexes)) {
-    status[dexKey] = dex.data.map(p =>
-      p.isRegionTitle ? null : { caught: p.caught, favorite: p.favorite }
-    );
+    status[dexKey] = {};
+    dex.data.forEach(p => {
+      if (!p.isRegionTitle) {
+        status[dexKey][p.number] = {
+          caught: !!p.caught,
+          favorite: !!p.favorite
+        };
+      }
+    });
   }
+
   for (const [medalKey, dex] of Object.entries(medals)) {
-    status[medalKey] = dex.data.map(p =>
-      p.isRegionTitle ? null : { caught: p.caught, favorite: p.favorite }
-    );
+    status[medalKey] = {};
+    dex.data.forEach(p => {
+      if (!p.isRegionTitle) {
+        status[medalKey][p.number] = {
+          caught: !!p.caught,
+          favorite: !!p.favorite
+        };
+      }
+    });
   }
+
   localStorage.setItem(STORAGE_KEY, JSON.stringify(status));
 }
 
 function loadCaughtStatus() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (!saved) return;
+
   const status = JSON.parse(saved);
-  for (const [dexKey, savedArray] of Object.entries(status)) {
-    if (pokedexes[dexKey]) {
-      pokedexes[dexKey].data.forEach((p, i) => {
-        if (!p.isRegionTitle) {
-          const savedObj = savedArray[i] ?? {};
-          p.caught = savedObj.caught ?? false;
-          p.favorite = savedObj.favorite ?? false;
-        }
-      });
-    } else if (medals[dexKey]) {
-      medals[dexKey].data.forEach((p, i) => {
-        if (!p.isRegionTitle) {
-          const savedObj = savedArray[i] ?? {};
-          p.caught = savedObj.caught ?? false;
-          p.favorite = savedObj.favorite ?? false;
-        }
-      });
-    }
+
+  for (const [dexKey, savedMap] of Object.entries(status)) {
+    const dex = pokedexes[dexKey] || medals[dexKey];
+    if (!dex) continue;
+
+    dex.data.forEach(p => {
+      if (!p.isRegionTitle && savedMap[p.number]) {
+        const savedObj = savedMap[p.number];
+        p.caught = savedObj.caught ?? false;
+        p.favorite = savedObj.favorite ?? false;
+      }
+    });
   }
 }
 
@@ -254,25 +278,12 @@ const REGION_BREAKS_DYNAMAX = [
   { name: "Galar", index: 42 },
 ];
 
-const REGION_BREAKS_SHINYDYNAMAX = [
-  { name: "Kanto", index: 0 },
-  { name: "Johto", index: 24 },
-  { name: "Hoenn", index: 29 },
-  { name: "Unova", index: 33 },
-  { name: "Alola", index: 41 },
-  { name: "Galar", index: 42 },
-];
-
+const REGION_BREAKS_SHINYDYNAMAX = [...REGION_BREAKS_DYNAMAX];
 const REGION_BREAKS_GIGANTAMAX = [
   { name: "Kanto", index: 0 },
   { name: "Galar", index: 8 },
 ];
-
-const REGION_BREAKS_SHINYGIGANTAMAX = [
-  { name: "Kanto", index: 0 },
-  { name: "Galar", index: 8 },
-];
-
+const REGION_BREAKS_SHINYGIGANTAMAX = [...REGION_BREAKS_GIGANTAMAX];
 const REGION_BREAKS_MEGA = [
   { name: "Kanto", index: 0 },
   { name: "Johto", index: 13 },
@@ -280,21 +291,6 @@ const REGION_BREAKS_MEGA = [
   { name: "Sinnoh", index: 35 },
   { name: "Kalos", index: 38 },
 ];
-
-function insertRegionTitles(pokedex, regionBreaks) {
-  const clonedData = [...pokedex.data];
-  regionBreaks.slice().reverse().forEach(({ name, index }) => {
-    if (index <= clonedData.length) {
-      clonedData.splice(index, 0, {
-        name: `${name} Region`,
-        number: "",
-        img: "",
-        isRegionTitle: true,
-      });
-    }
-  });
-  pokedex.data = clonedData;
-}
 
 function downloadPDF(key) {
   const pokedex = pokedexes[key] || medals[key];
