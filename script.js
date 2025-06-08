@@ -270,7 +270,6 @@ const REGION_BREAKS_GIGANTAMAX = [
 
 const REGION_BREAKS_SHINYGIGANTAMAX = [
   { name: "Kanto", index: 0 },
-  { name: "Galar", index: 8 },
 ];
 
 const REGION_BREAKS_MEGA = [

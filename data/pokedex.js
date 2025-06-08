@@ -3232,10 +3232,6 @@ const pokedexes = {
 { name: "Kingler", number: "099G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/099_f2.png", caught: false },
 { name: "Lapras", number: "131G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/131_f2.png", caught: false },
 { name: "Snorlax", number: "143G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/143_f2.png", caught: false },
-{ name: "Rillaboom", number: "812G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/812_f2.png", caught: false },
-{ name: "Cinderace", number: "815G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/815_f2.png", caught: false },
-{ name: "Inteleon", number: "818G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/818_f2.png", caught: false },
-{ name: "Toxtricity", number: "849G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/849_f3.png", caught: false },
     ]
   },
   perfect: {
