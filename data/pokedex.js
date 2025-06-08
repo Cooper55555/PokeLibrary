@@ -4225,3 +4225,44 @@ const pokedexes = {
     ]
   },
 };
+
+const medals = {
+  catch: {
+    title: "Catch Medals",
+    total: 32,
+    data: [
+      { name: "Pokemon Caught", number: "30", img: "https://static.wikia.nocookie.net/pokemongo/images/1/1d/Collector_Bronze.png", caught: false },
+      { name: "Pokemon Caught", number: "500", img: "https://static.wikia.nocookie.net/pokemongo/images/4/4a/Collector_Silver.png", caught: false },
+      { name: "Pokemon Caught", number: "2000", img: "https://static.wikia.nocookie.net/pokemongo/images/8/86/Collector_Gold.png", caught: false },
+      { name: "Pokemon Caught", number: "50000", img: "https://static.wikia.nocookie.net/pokemongo/images/c/c6/Collector_Platinum.png", caught: false },
+      { name: "Big Megikarp Caught", number: "3", img: "https://static.wikia.nocookie.net/pokemongo/images/1/18/Fisherman_Bronze.png", caught: false },
+      { name: "Big Megikarp Caught", number: "50", img: "https://static.wikia.nocookie.net/pokemongo/images/f/f8/Fisherman_Silver.png", caught: false },
+      { name: "Big Megikarp Caught", number: "300", img: "https://static.wikia.nocookie.net/pokemongo/images/6/69/Fisherman_Gold.png", caught: false },
+      { name: "Big Megikarp Caught", number: "1000", img: "https://static.wikia.nocookie.net/pokemongo/images/8/89/Fisherman_Platinum.png", caught: false },
+      { name: "Tiny Rattata Caught", number: "3", img: "https://static.wikia.nocookie.net/pokemongo/images/3/36/Youngster_Bronze.png", caught: false },
+      { name: "Tiny Rattata Caught", number: "50", img: "https://static.wikia.nocookie.net/pokemongo/images/9/95/Youngster_Silver.png", caught: false },
+      { name: "Tiny Rattata Caught", number: "300", img: "https://static.wikia.nocookie.net/pokemongo/images/9/94/Youngster_Gold.png", caught: false },
+      { name: "Tiny Rattata Caught", number: "1000", img: "https://static.wikia.nocookie.net/pokemongo/images/9/96/Youngster_Platinum.png", caught: false },
+      { name: "Pikachu Caught", number: "3", img: "https://static.wikia.nocookie.net/pokemongo/images/e/e7/PikachuFan_Bronze.png", caught: false },
+      { name: "Pikachu Caught", number: "50", img: "https://static.wikia.nocookie.net/pokemongo/images/c/ce/PikachuFan_Silver.png", caught: false },
+      { name: "Pikachu Caught", number: "300", img: "https://static.wikia.nocookie.net/pokemongo/images/9/94/PikachuFan_Gold.png", caught: false },
+      { name: "Pikachu Caught", number: "1000", img: "https://static.wikia.nocookie.net/pokemongo/images/7/74/PikachuFan_Platinum.png", caught: false },
+      { name: "Unique Unown Caught", number: "3", img: "https://static.wikia.nocookie.net/pokemongo/images/a/ad/Unown_Bronze.png", caught: false },
+      { name: "Unique Unown Caught", number: "10", img: "https://static.wikia.nocookie.net/pokemongo/images/2/21/Unown_Silver.png", caught: false },
+      { name: "Unique Unown Caught", number: "26", img: "https://static.wikia.nocookie.net/pokemongo/images/1/1b/Unown_Gold.png", caught: false },
+      { name: "Unique Unown Caught", number: "28", img: "https://static.wikia.nocookie.net/pokemongo/images/9/9d/Unown_Platinum.png", caught: false },
+      { name: "Catch XXS Pokemon", number: "5", img: "https://static.wikia.nocookie.net/pokemongo/images/7/7c/Small_Bronze.png", caught: false },
+      { name: "Catch XXS Pokemon", number: "25", img: "https://static.wikia.nocookie.net/pokemongo/images/4/4f/Small_Silver.png", caught: false },
+      { name: "Catch XXS Pokemon", number: "100", img: "https://static.wikia.nocookie.net/pokemongo/images/5/50/Small_Gold.png", caught: false },
+      { name: "Catch XXS Pokemon", number: "500", img: "https://static.wikia.nocookie.net/pokemongo/images/9/94/Small_Platinum.png", caught: false },
+      { name: "Catch XXL Pokemon", number: "5", img: "https://static.wikia.nocookie.net/pokemongo/images/7/7e/Large_Bronze.png", caught: false },
+      { name: "Catch XXL Pokemon", number: "25", img: "https://static.wikia.nocookie.net/pokemongo/images/1/19/Large_Silver.png", caught: false },
+      { name: "Catch XXL Pokemon", number: "100", img: "https://static.wikia.nocookie.net/pokemongo/images/d/d8/Large_Gold.png", caught: false },
+      { name: "Catch XXL Pokemon", number: "500", img: "https://static.wikia.nocookie.net/pokemongo/images/5/50/Large_Platinum.png", caught: false },
+      { name: "Unique Vivillan Patterns Caught", number: "1", img: "https://static.wikia.nocookie.net/pokemongo/images/6/68/VivillonCollector_Bronze.png", caught: false },
+      { name: "Unique Vivillan Patterns Caught", number: "5", img: "https://static.wikia.nocookie.net/pokemongo/images/1/1a/VivillonCollector_Silver.png", caught: false },
+      { name: "Unique Vivillan Patterns Caught", number: "10", img: "https://static.wikia.nocookie.net/pokemongo/images/2/2f/VivillonCollector_Gold.png", caught: false },
+      { name: "Unique Vivillan Patterns Caught", number: "18", img: "https://static.wikia.nocookie.net/pokemongo/images/9/98/VivillonCollector_Platinum.png", caught: false },
+    ]
+  },
+};

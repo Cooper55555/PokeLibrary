@@ -28,9 +28,21 @@ const currentSearch = {};
 function goHome() {
   const app = document.getElementById("app");
   app.innerHTML = `
-    <h1>Pokemon Go Collections</h1>
+    <h1>Pokemon Go Pokedexes</h1>
     <div class="collections">
       ${Object.entries(pokedexes).map(([key, dex]) => `
+        <div class="collection-card" onclick="renderPokedex('${key}')">
+          <div class="card-icon">📘</div>
+          <div class="card-content">
+            <h2>${dex.title}</h2>
+            <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <h1>Pokemon Go Medals</h1>
+    <div class="collections">
+      ${Object.entries(medals).map(([key, dex]) => `
         <div class="collection-card" onclick="renderPokedex('${key}')">
           <div class="card-icon">📘</div>
           <div class="card-content">
@@ -51,7 +63,12 @@ function goHome() {
 }
 
 function renderPokedex(key, filter = "all") {
-  const pokedex = pokedexes[key];
+  const pokedex = pokedexes[key] || medals[key];
+  if (!pokedex) {
+    console.error(`Pokedex or Medal not found for key: ${key}`);
+    return;
+  }
+
   const app = document.getElementById("app");
 
   currentFilter[key] = filter;
@@ -77,7 +94,7 @@ function renderPokedex(key, filter = "all") {
     <h1 id="caught-counter">(${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
     ${renderFilterControls(key, filter)}
     <div class="search-bar">
-      <input id="search-${key}" type="text" placeholder="Search Pokémon..." />
+      <input id="search-${key}" type="text" placeholder="${pokedexes[key] ? 'Search Pokémon...' : 'Search Medal...'}" />
     </div>
     <div class="pokedex-grid">
       ${filteredList.map((pokemon, displayIndex) => {
@@ -89,7 +106,7 @@ function renderPokedex(key, filter = "all") {
           <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${globalIndex}, this)">
             <img src="${pokemon.img}" alt="${pokemon.name}" />
             <div>${pokemon.name}</div>
-            <div>#${pokemon.number}</div>
+            <div>${pokedexes[key] ? `#${pokemon.number}` : pokemon.number}</div>
             ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
             <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', ${globalIndex}, this)">
               ${pokemon.favorite ? '🌝' : '🌚'}
@@ -130,7 +147,8 @@ function renderFilterControls(key, selected) {
 }
 
 function toggleCaught(key, index, cardElement) {
-  const pokemon = pokedexes[key].data[index];
+  const pokedex = pokedexes[key] || medals[key];
+  const pokemon = pokedex.data[index];
   if (pokemon.isRegionTitle) return;
 
   pokemon.caught = !pokemon.caught;
@@ -148,11 +166,12 @@ function toggleCaught(key, index, cardElement) {
   }
 
   const counter = document.getElementById("caught-counter");
-  counter.textContent = `(${getCaughtCount(pokedexes[key].data)} / ${pokedexes[key].total})`;
+  counter.textContent = `(${getCaughtCount(pokedex.data)} / ${pokedex.total})`;
 }
 
 function toggleFavorite(key, index, iconElement) {
-  const pokemon = pokedexes[key].data[index];
+  const pokedex = pokedexes[key] || medals[key];
+  const pokemon = pokedex.data[index];
   if (pokemon.isRegionTitle) return;
 
   pokemon.favorite = !pokemon.favorite;
@@ -179,6 +198,11 @@ function saveCaughtStatus() {
       p.isRegionTitle ? null : { caught: p.caught, favorite: p.favorite }
     );
   }
+  for (const [medalKey, dex] of Object.entries(medals)) {
+    status[medalKey] = dex.data.map(p =>
+      p.isRegionTitle ? null : { caught: p.caught, favorite: p.favorite }
+    );
+  }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(status));
 }
 
@@ -189,6 +213,14 @@ function loadCaughtStatus() {
   for (const [dexKey, savedArray] of Object.entries(status)) {
     if (pokedexes[dexKey]) {
       pokedexes[dexKey].data.forEach((p, i) => {
+        if (!p.isRegionTitle) {
+          const savedObj = savedArray[i] ?? {};
+          p.caught = savedObj.caught ?? false;
+          p.favorite = savedObj.favorite ?? false;
+        }
+      });
+    } else if (medals[dexKey]) {
+      medals[dexKey].data.forEach((p, i) => {
         if (!p.isRegionTitle) {
           const savedObj = savedArray[i] ?? {};
           p.caught = savedObj.caught ?? false;
@@ -263,7 +295,7 @@ function insertRegionTitles(pokedex, regionBreaks) {
 }
 
 function downloadPDF(key) {
-  const pokedex = pokedexes[key];
+  const pokedex = pokedexes[key] || medals[key];
   const { jsPDF } = window.jspdf;
 
   const doc = new jsPDF();
