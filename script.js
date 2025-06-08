@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
       regionBreaks = REGION_BREAKS_GIGANTAMAX;
     } else if (key === "mega") {
       regionBreaks = REGION_BREAKS_MEGA;
+    } else if (key === "shinygigantamax") {
+      regionBreaks = REGION_BREAKS_SHINYGIGANTAMAX;
+    } else if (key === "shinydynamax") {
+      regionBreaks = REGION_BREAKS_SHINYDYNAMAX;
     } else {
       regionBreaks = REGION_BREAKS_STANDARD;
     }
@@ -217,7 +221,20 @@ const REGION_BREAKS_DYNAMAX = [
   { name: "Galar", index: 25 },
 ];
 
+const REGION_BREAKS_SHINYDYNAMAX = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 14 },
+  { name: "Hoenn", index: 17 },
+  { name: "Unova", index: 20 },
+  { name: "Galar", index: 25 },
+];
+
 const REGION_BREAKS_GIGANTAMAX = [
+  { name: "Kanto", index: 0 },
+  { name: "Galar", index: 8 },
+];
+
+const REGION_BREAKS_SHINYGIGANTAMAX = [
   { name: "Kanto", index: 0 },
   { name: "Galar", index: 8 },
 ];
