@@ -247,20 +247,20 @@ const REGION_BREAKS_STANDARD = [
 
 const REGION_BREAKS_DYNAMAX = [
   { name: "Kanto", index: 0 },
-  { name: "Johto", index: 21 },
-  { name: "Hoenn", index: 26 },
-  { name: "Unova", index: 30 },
-  { name: "Alola", index: 38 },
-  { name: "Galar", index: 39 },
+  { name: "Johto", index: 24 },
+  { name: "Hoenn", index: 29 },
+  { name: "Unova", index: 33 },
+  { name: "Alola", index: 41 },
+  { name: "Galar", index: 42 },
 ];
 
 const REGION_BREAKS_SHINYDYNAMAX = [
   { name: "Kanto", index: 0 },
-  { name: "Johto", index: 21 },
-  { name: "Hoenn", index: 26 },
-  { name: "Unova", index: 30 },
-  { name: "Alola", index: 38 },
-  { name: "Galar", index: 39 },
+  { name: "Johto", index: 24 },
+  { name: "Hoenn", index: 29 },
+  { name: "Unova", index: 33 },
+  { name: "Alola", index: 41 },
+  { name: "Galar", index: 42 },
 ];
 
 const REGION_BREAKS_GIGANTAMAX = [

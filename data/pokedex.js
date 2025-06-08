@@ -3082,7 +3082,7 @@ const pokedexes = {
   },
   dynamax: {
     title: "Dynamax Pokedex",
-    total: 65,
+    total: 68,
     data: [
 { name: "Bulbasaur", number: "001D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
 { name: "Ivysaur", number: "002D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -3105,6 +3105,9 @@ const pokedexes = {
 { name: "Machoke", number: "067D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/067.png", caught: false },
 { name: "Machamp", number: "068D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/068.png", caught: false },
 { name: "Chansey", number: "113D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/113.png", caught: false },
+{ name: "Articuno", number: "144D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/144.png", caught: false },
+{ name: "Zapdos", number: "145D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/145.png", caught: false },
+{ name: "Moltres", number: "146D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/146.png", caught: false },
 { name: "Shuckle", number: "213D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/213.png", caught: false },
 { name: "Blissey", number: "242D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/242.png", caught: false },
 { name: "Raikou", number: "243D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/243.png", caught: false },
@@ -3168,7 +3171,7 @@ const pokedexes = {
   },
   shinydynamax: {
     title: "Shiny Dynamax Pokedex",
-    total: 51,
+    total: 54,
     data: [
 { name: "Bulbasaur", number: "001D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
 { name: "Ivysaur", number: "002D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -3191,6 +3194,9 @@ const pokedexes = {
 { name: "Machoke", number: "067D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/067.png", caught: false },
 { name: "Machamp", number: "068D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/068.png", caught: false },
 { name: "Chansey", number: "113D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/113.png", caught: false },
+{ name: "Articuno", number: "144D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/144.png", caught: false },
+{ name: "Zapdos", number: "145D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/145.png", caught: false },
+{ name: "Moltres", number: "146D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/146.png", caught: false },
 { name: "Shuckle", number: "213D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/213.png", caught: false },
 { name: "Blissey", number: "242D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/242.png", caught: false },
 { name: "Raikou", number: "243D", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/243.png", caught: false },
