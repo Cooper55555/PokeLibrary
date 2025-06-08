@@ -4308,4 +4308,18 @@ const medals = {
       { name: "Pokémon Eggs Hatched", number: "2500", img: "https://static.wikia.nocookie.net/pokemongo/images/b/b8/Breeder_Platinum.png", caught: false },
     ]
   },
+    trading: {
+    title: "Trading Medals",
+    total: 8,
+    data: [
+      { name: "Earned KM Across The Distance Of All Pokémon Trades", number: "1000", img: "https://static.wikia.nocookie.net/pokemongo/images/a/a6/Pilot_Bronze.png", caught: false },
+      { name: "Earned KM Across The Distance Of All Pokémon Trades", number: "100000", img: "https://static.wikia.nocookie.net/pokemongo/images/3/3c/Pilot_Silver.png", caught: false },
+      { name: "Earned KM Across The Distance Of All Pokémon Trades", number: "1000000", img: "https://static.wikia.nocookie.net/pokemongo/images/4/4e/Pilot_Gold.png", caught: false },
+      { name: "Earned KM Across The Distance Of All Pokémon Trades", number: "10000000", img: "https://static.wikia.nocookie.net/pokemongo/images/f/f8/Pilot_Platinum.png", caught: false },
+      { name: "Pokémon Trades", number: "10", img: "https://static.wikia.nocookie.net/pokemongo/images/1/1c/Gentleman_Bronze.png", caught: false },
+      { name: "Pokémon Trades", number: "100", img: "https://static.wikia.nocookie.net/pokemongo/images/1/1f/Gentleman_Silver.png", caught: false },
+      { name: "Pokémon Trades", number: "500", img: "https://static.wikia.nocookie.net/pokemongo/images/f/f0/Gentleman_Gold.png", caught: false },
+      { name: "Pokémon Trades", number: "2500", img: "https://static.wikia.nocookie.net/pokemongo/images/5/59/Gentleman_Platinum.png", caught: false },
+    ]
+  },
 };
