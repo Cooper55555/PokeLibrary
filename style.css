@@ -147,36 +147,39 @@ h5 {
   flex-wrap: wrap;
 }
 
-.discord-button,
-.app-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #5865F2;
+.social-button-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.social-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
-  font-size: 1rem;
-  text-align: center;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  font-size: 24px;
   text-decoration: none;
-  transition: background-color 0.2s ease;
-  flex: 1 1 auto;
-  max-width: 250px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.discord-button {
+.social-button:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+/* Platform-specific colors */
+.social-button.discord {
   background-color: #5865F2;
 }
 
-.discord-button:hover {
-  background-color: #4752c4;
-}
-
-.app-button {
+.social-button.android {
   background-color: #333;
-}
-
-.app-button:hover {
-  background-color: #222;
 }
 
 .search-bar {

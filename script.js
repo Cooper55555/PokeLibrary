@@ -70,10 +70,10 @@ function goHome() {
         </div>
       `).join('')}
     </div>
-    <div class="button-container">
-        <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="discord-button">Join Our Discord</a>
-        <a href="https://median.co/share/rrabnz#apk" target="_blank" class="app-button">Download App APK</a>
-    </div>
+  	  <div class="social-button-container">
+        <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
+        <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+      </div>
     <div class="copyright-container">
         <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
     </div>
