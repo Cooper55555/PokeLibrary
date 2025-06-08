@@ -3222,7 +3222,7 @@ const pokedexes = {
   },
   shinygigantamax: {
     title: "Shiny Gigantamax Pokedex",
-    total: 8,
+    total: 9,
     data: [
 { name: "Venusaur", number: "003G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003_f3.png", caught: false },
 { name: "Charizard", number: "006G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006_f3.png", caught: false },
@@ -3232,6 +3232,7 @@ const pokedexes = {
 { name: "Kingler", number: "099G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/099_f2.png", caught: false },
 { name: "Lapras", number: "131G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/131_f2.png", caught: false },
 { name: "Snorlax", number: "143G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/143_f2.png", caught: false },
+{ name: "Toxtricity", number: "849G", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/849_f3.png", caught: false },
     ]
   },
   perfect: {
