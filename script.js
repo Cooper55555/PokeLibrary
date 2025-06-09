@@ -51,7 +51,7 @@ function goHome() {
     </div>
 
     <div id="pokedexes-container">
-      <h1 class="PokedexTitle">Pokemon Go Pokedexes</h1>
+      <h1>Pokemon Go Pokedexes</h1>
       <div id="pokedexes-section" class="collections">
         ${Object.entries(pokedexes).map(([key, dex]) => `
           <div class="collection-card" onclick="renderPokedex('${key}')">

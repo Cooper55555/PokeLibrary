@@ -466,12 +466,20 @@ input:checked + .slider:before {
   margin-right: 0.15rem;
   }
 
-  .PokedexTitle {
+  h1 {
   text-align: center;
   margin-top: 50px;
   margin-left: 20px;
   margin-right: 20px;
   margin-bottom: 0px;
   font-size: 40px;
+  }
+
+  h5 {
+  text-align: center;
+  margin-top: 50px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 15px;
   }
 }
