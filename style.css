@@ -178,7 +178,7 @@ h5 {
 }
 
 .social-button.android {
-  background-color: #333;
+  background-color: #555;
 }
 
 .search-bar {
@@ -312,6 +312,12 @@ body.dark-mode {
   margin: 15px;
 }
 
+.switch-container {
+  margin: 5px;
+  line-height: 31px;
+  font-weight: bolder;
+}
+
 .switch {
   position: relative;
   display: inline-block;
@@ -340,7 +346,7 @@ body.dark-mode {
 
 .slider:before {
   position: absolute;
-  content: "☀️";
+  content: "";
   height: 30px;
   width: 30px;
   left: 4px;
@@ -359,7 +365,68 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(32px);
-  content: "🌙";
+  content: "";
+}
+
+.settings-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.settings-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fff;
+  color: #000;
+  margin: 15px;
+  padding: 30px 30px 40px 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.dark-mode .modal-content {
+  background: #222;
+  color: #eee;
+  box-shadow: 0 8px 24px rgba(255,255,255,0.15);
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 28px;
+  font-weight: bold;
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 @media (max-width: 750px) {
@@ -389,5 +456,22 @@ input:checked + .slider:before {
   background-color: #f4f4f4;
   text-align: left;
   border-left: 4px solid #333;
+  }
+
+  .switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 38px;
+  margin-right: 0.15rem;
+  }
+
+  .PokedexTitle {
+  text-align: center;
+  margin-top: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 0px;
+  font-size: 40px;
   }
 }

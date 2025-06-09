@@ -19,17 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     insertRegionTitles(pokedex, regionBreaks);
   }
 
-  const isDarkMode = localStorage.getItem("darkMode") === "enabled";
-  const toggle = document.getElementById("darkModeToggle");
-
-  if (isDarkMode) {
-    document.body.classList.add("dark-mode");
-    if (toggle) toggle.checked = true;
-  } else {
-    document.body.classList.remove("dark-mode");
-    if (toggle) toggle.checked = false;
-  }
-
   loadCaughtStatus();
   goHome();
 });
@@ -57,45 +46,104 @@ const currentSearch = {};
 function goHome() {
   const app = document.getElementById("app");
   app.innerHTML = `
-    <div class="modecolor">
-      <label class="switch">
-        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
-        <span class="slider"></span>
-      </label>
+    <div class="settings-container">
+      <i class="fas fa-cog settings-icon" onclick="toggleSettingsModal()"></i>
     </div>
-    <h1>Pokemon Go Pokedexes</h1>
-    <div class="collections">
-      ${Object.entries(pokedexes).map(([key, dex]) => `
-        <div class="collection-card" onclick="renderPokedex('${key}')">
-          <div class="card-icon">📘</div>
-          <div class="card-content">
-            <h2>${dex.title}</h2>
-            <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+
+    <div id="pokedexes-container">
+      <h1 class="PokedexTitle">Pokemon Go Pokedexes</h1>
+      <div id="pokedexes-section" class="collections">
+        ${Object.entries(pokedexes).map(([key, dex]) => `
+          <div class="collection-card" onclick="renderPokedex('${key}')">
+            <div class="card-icon">📘</div>
+            <div class="card-content">
+              <h2>${dex.title}</h2>
+              <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+            </div>
           </div>
-        </div>
-      `).join('')}
+        `).join('')}
+      </div>
     </div>
-    <h1>Pokemon Go Medals</h1>
-    <div class="collections">
-      ${Object.entries(medals).map(([key, dex]) => `
-        <div class="collection-card" onclick="renderPokedex('${key}')">
-          <div class="card-icon">📘</div>
-          <div class="card-content">
-            <h2>${dex.title}</h2>
-            <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+
+    <div id="medals-container">
+      <h1>Pokemon Go Medals</h1>
+      <div id="medals-section" class="collections">
+        ${Object.entries(medals).map(([key, dex]) => `
+          <div class="collection-card" onclick="renderPokedex('${key}')">
+            <div class="card-icon">📘</div>
+            <div class="card-content">
+              <h2>${dex.title}</h2>
+              <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+            </div>
           </div>
-        </div>
-      `).join('')}
+        `).join('')}
+      </div>
     </div>
-    <div class="social-button-container">
-      <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
-      <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
-    </div>
+
     <div class="copyright-container">
       <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
     </div>
+
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-button" onclick="toggleSettingsModal()">×</span>
+        <h2>Settings</h2>
+
+        <div class="switch-container">
+          <label class="switch">
+            <input type="checkbox" id="togglePokedexes" onchange="toggleSectionVisibility('pokedexes-container', this.checked)">
+            <span class="slider"></span>
+          </label>
+          <span>Show Pokedexes</span>
+        </div>
+
+        <div class="switch-container">
+          <label class="switch">
+            <input type="checkbox" id="toggleMedals" onchange="toggleSectionVisibility('medals-container', this.checked)">
+            <span class="slider"></span>
+          </label>
+          <span>Show Medals</span>
+        </div>
+
+        <div class="switch-container">
+          <label class="switch">
+            <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+            <span class="slider"></span>
+          </label>
+          <span>Dark Mode</span>
+        </div>
+
+        <div class="social-button-container">
+          <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
+          <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+        </div>
+      </div>
+    </div>
   `;
+
+  // Initialize toggle states based on saved preferences and defaults
   syncToggleWithDarkMode();
+syncToggleSectionVisibility('pokedexes-container', 'togglePokedexes', true);
+syncToggleSectionVisibility('medals-container', 'toggleMedals', true);
+}
+
+function toggleSettingsModal() {
+  const modal = document.getElementById("settings-modal");
+  modal.classList.toggle("hidden");
+
+  // When opened, sync all toggles
+  if (!modal.classList.contains("hidden")) {
+    syncToggleWithDarkMode();
+syncToggleSectionVisibility('pokedexes-container', 'togglePokedexes', true);
+syncToggleSectionVisibility('medals-container', 'toggleMedals', true);
+  }
+}
+
+function toggleDarkMode() {
+  const toggle = document.getElementById("darkModeToggle");
+  const isDarkMode = toggle.checked;
+  document.body.classList.toggle("dark-mode", isDarkMode);
+  localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
 }
 
 function syncToggleWithDarkMode() {
@@ -104,12 +152,39 @@ function syncToggleWithDarkMode() {
   if (toggle) {
     toggle.checked = isDarkMode;
   }
+  document.body.classList.toggle("dark-mode", isDarkMode);
 }
 
-function toggleDarkMode() {
-  const isDarkMode = document.body.classList.toggle("dark-mode");
-  localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+function toggleSectionVisibility(sectionId, isVisible) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.style.display = isVisible ? '' : 'none';
+    localStorage.setItem(sectionId, isVisible ? 'visible' : 'hidden');
+  }
 }
+
+function syncToggleSectionVisibility(sectionId, toggleId, defaultVisible) {
+  const section = document.getElementById(sectionId);
+  const toggle = document.getElementById(toggleId);
+  const saved = localStorage.getItem(sectionId);
+  const isVisible = saved === null ? defaultVisible : saved === 'visible';
+
+  if (section && toggle) {
+    section.style.display = isVisible ? '' : 'none';
+    toggle.checked = isVisible;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Dark mode on load
+  if (localStorage.getItem("darkMode") === "enabled") {
+    document.body.classList.add("dark-mode");
+  }
+
+  // Sync section visibility
+  syncToggleSectionVisibility('pokedexes-section', 'togglePokedexes', true);
+  syncToggleSectionVisibility('medals-section', 'toggleMedals', true);
+});
 
 function renderPokedex(key, filter = "all") {
   const pokedex = pokedexes[key] || medals[key];
