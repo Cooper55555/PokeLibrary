@@ -234,6 +234,134 @@ h5 {
   background-color: #4752c4;
 }
 
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode .pokemon-card.caught {
+  background-color: lightgreen;
+  color: #333
+}
+
+.dark-mode .collection-card,
+.dark-mode .pokemon-card {
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+}
+
+.dark-mode .collection-card:hover,
+.dark-mode .pokemon-card:hover {
+  box-shadow: 0 4px 12px rgba(255,255,255,0.15);
+}
+
+.dark-mode .filter-bar button {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+.dark-mode .filter-bar button.active,
+.dark-mode .filter-bar button:hover {
+  background-color: #333;
+}
+
+.dark-mode .search-bar input {
+  background-color: #222;
+  color: #e0e0e0;
+  border: 1px solid #555;
+}
+
+.toggle-mode-button {
+  margin-right: 1rem;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.dark-mode .region-title {
+  background-color: transparent;
+  color:#e0e0e0;
+  border-left-color:#e0e0e0;
+}
+
+.toggle-mode-button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.toggle-mode-button:hover {
+  background-color: #444;
+}
+
+.modecolor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 38px;
+  margin-right: 1rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "☀️";
+  height: 30px;
+  width: 30px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  text-align: center;
+  line-height: 29px;
+  font-size: 20px;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #666;
+}
+
+input:checked + .slider:before {
+  transform: translateX(32px);
+  content: "🌙";
+}
+
 @media (max-width: 750px) {
   h1 {
     text-align: center;

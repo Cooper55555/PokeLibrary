@@ -19,6 +19,17 @@ document.addEventListener("DOMContentLoaded", () => {
     insertRegionTitles(pokedex, regionBreaks);
   }
 
+  const isDarkMode = localStorage.getItem("darkMode") === "enabled";
+  const toggle = document.getElementById("darkModeToggle");
+
+  if (isDarkMode) {
+    document.body.classList.add("dark-mode");
+    if (toggle) toggle.checked = true;
+  } else {
+    document.body.classList.remove("dark-mode");
+    if (toggle) toggle.checked = false;
+  }
+
   loadCaughtStatus();
   goHome();
 });
@@ -46,6 +57,12 @@ const currentSearch = {};
 function goHome() {
   const app = document.getElementById("app");
   app.innerHTML = `
+    <div class="modecolor">
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+        <span class="slider"></span>
+      </label>
+    </div>
     <h1>Pokemon Go Pokedexes</h1>
     <div class="collections">
       ${Object.entries(pokedexes).map(([key, dex]) => `
@@ -70,14 +87,28 @@ function goHome() {
         </div>
       `).join('')}
     </div>
-  	  <div class="social-button-container">
-        <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
-        <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
-      </div>
+    <div class="social-button-container">
+      <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
+      <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+    </div>
     <div class="copyright-container">
-        <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+      <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
     </div>
   `;
+  syncToggleWithDarkMode();
+}
+
+function syncToggleWithDarkMode() {
+  const toggle = document.getElementById("darkModeToggle");
+  const isDarkMode = localStorage.getItem("darkMode") === "enabled";
+  if (toggle) {
+    toggle.checked = isDarkMode;
+  }
+}
+
+function toggleDarkMode() {
+  const isDarkMode = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
 }
 
 function renderPokedex(key, filter = "all") {
@@ -120,7 +151,6 @@ function renderPokedex(key, filter = "all") {
           return `<div class="region-title">${pokemon.name}</div>`;
         }
         if (medals[key]) {
-          // For medals, use index for uniqueness
           return `
             <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', ${i}, this)">
               <img src="${pokemon.img}" alt="${pokemon.name}" />
@@ -133,7 +163,6 @@ function renderPokedex(key, filter = "all") {
             </div>
           `;
         } else {
-          // For pokedexes, use number for uniqueness
           return `
             <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', '${pokemon.number}', this)">
               <img src="${pokemon.img}" alt="${pokemon.name}" />
