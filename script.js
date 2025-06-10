@@ -420,6 +420,80 @@ function toggleCaught(key, id, cardElement) {
 
   const counter = document.getElementById("caught-counter");
   counter.textContent = `(${getCaughtCount(dex.data)} / ${dex.total})`;
+
+  // ---- NEW CODE START ----
+  // Update region button selection state after toggling a pokemon
+
+  // Get the regionBreaks and selectedRegion for this dex
+  const regionBreaks = dex.regionBreaks;
+  if (!regionBreaks || !selectedRegion[key]) return;
+
+  // Find which region this pokemon belongs to by its real index (ignoring region titles)
+  let realIndex = -1;
+  let regionIndex = -1;
+  for (let i = 0; i < dex.data.length; i++) {
+    const p = dex.data[i];
+    if (!p.isRegionTitle) realIndex++;
+    if (p.number === id) {
+      // Find region index where realIndex fits between start and end
+      for (let j = 0; j < regionBreaks.length; j++) {
+        const start = regionBreaks[j].index;
+        const end = (j + 1 < regionBreaks.length) ? regionBreaks[j + 1].index - 1 : dex.data.length - 1;
+
+        // Because regionBreaks index uses raw index including region titles, adjust accordingly:
+        // realIndex counts only pokemon ignoring titles, but regionBreaks index counts titles.
+        // So we need to map realIndex back to dex.data index.
+        // We'll do this by counting non-title pokemons up to the region break's index.
+
+        // Let's try matching by regionBreak raw index vs dex.data index:
+        if (i >= start && i <= end) {
+          regionIndex = j;
+          break;
+        }
+      }
+      break;
+    }
+  }
+
+  if (regionIndex === -1) return;
+
+  // Now check if all pokemons in that region are caught
+  const start = regionBreaks[regionIndex].index;
+  const end = (regionIndex + 1 < regionBreaks.length) ? regionBreaks[regionIndex + 1].index - 1 : dex.data.length - 1;
+
+  // Check all pokemons (ignore region titles) in this range:
+  let allCaught = true;
+  for (let i = start; i <= end; i++) {
+    const p = dex.data[i];
+    if (!p || p.isRegionTitle) continue;
+    if (!p.caught) {
+      allCaught = false;
+      break;
+    }
+  }
+
+  // Update selectedRegion set accordingly
+  if (allCaught) {
+    selectedRegion[key].add(regionIndex);
+  } else {
+    selectedRegion[key].delete(regionIndex);
+  }
+
+  // Save selected regions in localStorage
+  localStorage.setItem(`selectedRegion_${key}`, JSON.stringify(Array.from(selectedRegion[key])));
+
+  // Update UI for region buttons to reflect new state
+  const regionButtons = document.querySelectorAll(".region-button");
+  regionButtons.forEach(button => {
+    if (Number(button.dataset.index) === regionIndex) {
+      if (allCaught) {
+        button.classList.add("selected");
+      } else {
+        button.classList.remove("selected");
+      }
+    }
+  });
+  // ---- NEW CODE END ----
 }
 
 function toggleFavorite(key, id, iconElement) {
