@@ -34,7 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadCaughtStatus();
-  goHome();
+
+  // New code: load last position
+  const lastViewKey = localStorage.getItem("lastViewKey");
+  const lastViewFilter = localStorage.getItem("lastViewFilter") || "all";
+
+  if (lastViewKey && (pokedexes[lastViewKey] || medals[lastViewKey] || events[lastViewKey])) {
+    renderPokedex(lastViewKey, lastViewFilter);
+  } else {
+    goHome();
+  }
 });
 
 function insertRegionTitles(pokedex, regionBreaks) {
@@ -58,6 +67,10 @@ const currentFilter = {};
 const currentSearch = {};
 
 function goHome() {
+
+  localStorage.removeItem("lastViewKey");
+  localStorage.removeItem("lastViewFilter");
+
   const app = document.getElementById("app");
   app.innerHTML = `
     <div class="settings-container">
@@ -228,6 +241,9 @@ function renderPokedex(key, filter = "all") {
     console.error(`Pokedex, Medal, or Event not found for key: ${key}`);
     return;
   }
+
+  localStorage.setItem("lastViewKey", key);
+  localStorage.setItem("lastViewFilter", filter);
 
   const app = document.getElementById("app");
 
@@ -486,13 +502,13 @@ function downloadPDF(key) {
       doc.setFontSize(12);
       doc.text(line, 10, y);
       y += 6;
+    }
 
-      if (y > 280) {
-        doc.addPage();
-        y = 10;
-      }
+    if (y > 280) {
+      doc.addPage();
+      y = 10;
     }
   });
 
-  doc.save(`${pokedex.title}_Collection.pdf`);
+  doc.save(`${pokedex.title}.pdf`);
 }
