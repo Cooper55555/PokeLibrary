@@ -20,6 +20,10 @@ h5 {
   margin: 15px;
 }
 
+#caught-counter {
+  margin: 20px;
+}
+
 .collections {
   display: flex;
   flex-wrap: wrap;
@@ -51,8 +55,7 @@ h5 {
   text-align: center;
 }
 
-.back-button,
-.download-button {
+.back-button {
   margin: 1rem;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -62,6 +65,18 @@ h5 {
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+}
+
+.download-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
 }
 
 .top-bar {
@@ -80,7 +95,7 @@ h5 {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin: 1rem auto;
+  margin: 5px;
 }
 
 .filter-bar button {
@@ -221,7 +236,7 @@ h5 {
 }
 
 .download-button {
-  margin: 10px 20px;
+  margin: 0px auto;
   padding: 10px 15px;
   background-color: #4752c4;
   color: white;
@@ -404,12 +419,17 @@ input:checked + .slider:before {
   padding: 30px 30px 40px 30px;
   border-radius: 12px;
   width: 90%;
+  max-height: 90%;
   max-width: 420px;
   position: relative;
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 18px;
   line-height: 1.4;
+}
+
+.second-modal-content {
+  font-weight: bolder;
 }
 
 .dark-mode .modal-content {
@@ -427,6 +447,72 @@ input:checked + .slider:before {
   color: inherit;
   cursor: pointer;
   transition: color 0.3s ease;
+}
+
+.region-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;   /* center horizontally */
+  align-items: center;       /* center vertically if container height applies */
+  /* Center the container on the page */
+  margin: 15px;
+}
+
+.region-button {
+  display: inline-block; /* or flex */
+  padding: 50px 50px;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  user-select: none;
+  color: #333;
+  box-sizing: border-box; /* ensure padding adds inside the box */
+  font-weight: bold;
+}
+
+.region-button:hover {
+  background-color: #555;
+  color: white;
+  border-color: #555;
+}
+
+.region-button.selected {
+  background-color: #555;
+  color: white;
+  border-color: #555;
+}
+
+.region-button.selected:hover {
+  background-color: #444;
+  border-color: #444;
+}
+
+/* Dark mode styles */
+body.dark-mode .region-button {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  color: #e0e0e0;
+}
+
+body.dark-mode .region-button:hover {
+  background-color: #333;
+  border-color: #666;
+  color: white;
+}
+
+body.dark-mode .region-button.selected {
+  background-color: #333;
+  border-color: #666;
+  color: white;
+}
+
+body.dark-mode .region-button.selected:hover {
+  background-color: #444;
+  border-color: #888;
 }
 
 @media (max-width: 750px) {

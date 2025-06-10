@@ -19,8 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     insertRegionTitles(pokedex, regionBreaks);
+    pokedex.regionBreaks = regionBreaks;  // <-- Add this line
   }
 
+  // same for events
   for (const [key, pokedex] of Object.entries(events)) {
     let regionBreaks;
 
@@ -31,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     insertRegionTitles(pokedex, regionBreaks);
+    pokedex.regionBreaks = regionBreaks;  // <-- Add this here too
   }
 
   loadCaughtStatus();
@@ -65,6 +68,7 @@ function insertRegionTitles(pokedex, regionBreaks) {
 
 const currentFilter = {};
 const currentSearch = {};
+const selectedRegion = {};
 
 function goHome() {
 
@@ -242,6 +246,27 @@ function renderPokedex(key, filter = "all") {
     return;
   }
 
+  if (!selectedRegion[key]) {
+  // Load from localStorage or initialize
+  const savedRegions = localStorage.getItem(`selectedRegion_${key}`);
+  if (savedRegions) {
+    selectedRegion[key] = new Set(JSON.parse(savedRegions));
+  } else {
+    selectedRegion[key] = new Set();
+  }
+
+  // Apply caught status for saved selected regions
+  const pokedex = pokedexes[key] || medals[key] || events[key];
+  if (pokedex?.regionBreaks) {
+    const breaks = pokedex.regionBreaks.slice().sort((a,b) => a.index - b.index);
+    selectedRegion[key].forEach(idx => {
+      const startIndex = breaks[idx].index;
+      const endIndex = (idx + 1 < breaks.length) ? breaks[idx + 1].index - 1 : pokedex.data.length - 1;
+      checkRegion(key, startIndex, endIndex);
+    });
+  }
+}
+
   localStorage.setItem("lastViewKey", key);
   localStorage.setItem("lastViewFilter", filter);
 
@@ -264,7 +289,9 @@ function renderPokedex(key, filter = "all") {
   app.innerHTML = `
     <div class="top-bar">
       <button class="back-button" onclick="goHome()">← Back</button>
-      <button class="download-button" onclick="downloadPDF('${key}')">Download PDF</button>
+      <div class="settings-container">
+      <i class="fas fa-cog settings-icon" onclick="toggleSecondSettingsModal()"></i>
+      </div>
     </div>
     <h1>${pokedex.title}</h1>
     <h1 id="caught-counter">(${getCaughtCount(pokedex.data)} / ${pokedex.total})</h1>
@@ -290,7 +317,56 @@ function renderPokedex(key, filter = "all") {
         `;
       }).join('')}
     </div>
+
+    <div id="second-settings-modal" class="modal hidden second-modal">
+      <div class="modal-content second-modal-content">
+      <span class="close-button" onclick="toggleSecondSettingsModal()">×</span>
+      <h2>Settings</h2>
+      ${renderRegionButtons(key)}  <!-- Insert here -->
+      <button class="download-button" onclick="downloadPDF('${key}')">Download PDF</button>
+      </div>
+    </div>
   `;
+
+  if (!selectedRegion[key]) selectedRegion[key] = new Set();
+  // Attach region button click listeners
+const regionButtons = document.querySelectorAll(".region-button");
+regionButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const idx = Number(button.dataset.index);
+    const start = Number(button.dataset.start);
+    const end = Number(button.dataset.end);
+
+    if (!selectedRegion[key]) selectedRegion[key] = new Set();
+
+    if (selectedRegion[key].has(idx)) {
+      // Deselect region
+      selectedRegion[key].delete(idx);
+      uncheckRegion(key, start, end);
+    } else {
+      // Select region
+      selectedRegion[key].add(idx);
+      checkRegion(key, start, end);
+    }
+
+    // Save selected regions in localStorage
+    localStorage.setItem(`selectedRegion_${key}`, JSON.stringify(Array.from(selectedRegion[key])));
+
+    // Save whether the second modal is open before re-render
+    const secondModal = document.getElementById('second-settings-modal');
+    const wasModalOpen = !secondModal.classList.contains('hidden');
+
+    renderPokedex(key, currentFilter[key]);
+
+    // Re-open modal if it was open before
+    if (wasModalOpen) {
+      const newSecondModal = document.getElementById('second-settings-modal');
+      if (newSecondModal) {
+        newSecondModal.classList.remove('hidden');
+      }
+    }
+  });
+});
 
   const searchInput = document.getElementById(`search-${key}`);
   searchInput.value = currentSearch[key] || "";
@@ -308,6 +384,11 @@ function renderPokedex(key, filter = "all") {
     newInput.focus();
     newInput.setSelectionRange(start, end);
   });
+}
+
+function toggleSecondSettingsModal() {
+  const modal = document.getElementById('second-settings-modal');
+  modal.classList.toggle('hidden');
 }
 
 function renderFilterControls(key, selected) {
@@ -361,6 +442,65 @@ function getPercentage(pokemonList) {
   return ((caught / total) * 100).toFixed(2);
 }
 
+function checkRegion(key, startIndex, endIndex) {
+  const dex = pokedexes[key] || medals[key] || events[key];
+  if (!dex) return;
+
+  let realIndex = -1;
+  for (let i = 0; i < dex.data.length; i++) {
+    const p = dex.data[i];
+    if (!p.isRegionTitle) {
+      realIndex++;
+      if (realIndex >= startIndex && realIndex <= endIndex) {
+        p.caught = true;
+      }
+    }
+  }
+
+  saveCaughtStatus();
+}
+
+function uncheckRegion(key, startIndex, endIndex) {
+  const dex = pokedexes[key] || medals[key] || events[key];
+  if (!dex) return;
+
+  let realIndex = -1;
+  for (let i = 0; i < dex.data.length; i++) {
+    const p = dex.data[i];
+    if (!p.isRegionTitle) {
+      realIndex++;
+      if (realIndex >= startIndex && realIndex <= endIndex) {
+        p.caught = false;
+      }
+    }
+  }
+
+  saveCaughtStatus();
+}
+
+function renderRegionButtons(key) {
+  const pokedex = pokedexes[key] || medals[key] || events[key];
+  if (!pokedex?.regionBreaks) return '';
+
+  const breaks = pokedex.regionBreaks.slice().sort((a,b) => a.index - b.index);
+
+  return `
+    <div class="region-buttons-container" style="margin-bottom: 20px;">
+      ${breaks.map(({ name, index }, i) => {
+        const endIndex = (i + 1 < breaks.length) ? breaks[i+1].index - 1 : pokedex.data.length - 1;
+        const isSelected = selectedRegion[key]?.has(i);
+        return `<button class="region-button ${isSelected ? 'selected' : ''}" 
+                data-index="${i}"
+                data-start="${index}"
+                data-end="${endIndex}"
+                style="padding: 0.5rem 1rem; cursor: pointer;">
+                ${name}
+              </button>`;
+      }).join('')}
+    </div>
+  `;
+}
+
 const STORAGE_KEY = "pokemonCaughtStatus";
 
 function saveCaughtStatus() {
@@ -393,6 +533,7 @@ function saveCaughtStatus() {
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(status));
 }
+
 
 function loadCaughtStatus() {
   const saved = localStorage.getItem(STORAGE_KEY);
