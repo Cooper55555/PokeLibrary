@@ -305,12 +305,12 @@ function renderPokedex(key, filter = "all") {
           return `<div class="region-title">${pokemon.name}</div>`;
         }
         return `
-          <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', '${pokemon.number}', this)">
+          <div class="pokemon-card ${pokemon.caught ? 'caught' : ''}" onclick="toggleCaught('${key}', '${medals[key] ? pokemon.id : pokemon.number}', this)">
             <img src="${pokemon.img}" alt="${pokemon.name}" />
             <div>${pokemon.name}</div>
-            <div>#${pokemon.number}</div>
+            <div>${pokemon.number}</div>
             ${pokemon.caught ? `<div class="checkmark">✔️</div>` : ''}
-            <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', '${pokemon.number}', this)">
+            <div class="favorite-icon" onclick="event.stopPropagation(); toggleFavorite('${key}', '${medals[key] ? pokemon.id : pokemon.number}', this)">
               ${pokemon.favorite ? '🌝' : '🌚'}
             </div>
           </div>
@@ -404,7 +404,7 @@ function renderFilterControls(key, selected) {
 
 function toggleCaught(key, id, cardElement) {
   const dex = pokedexes[key] || medals[key] || events[key];
-  const pokemon = dex.data.find(p => p.number === id && !p.isRegionTitle);
+  const pokemon = dex.data.find(p => (medals[key] ? p.id === id : p.number === id) && !p.isRegionTitle);
   if (!pokemon) return;
 
   pokemon.caught = !pokemon.caught;
@@ -498,7 +498,7 @@ function toggleCaught(key, id, cardElement) {
 
 function toggleFavorite(key, id, iconElement) {
   const dex = pokedexes[key] || medals[key] || events[key];
-  const pokemon = dex.data.find(p => p.number === id && !p.isRegionTitle);
+  const pokemon = dex.data.find(p => (medals[key] ? p.id === id : p.number === id) && !p.isRegionTitle);
   if (!pokemon) return;
 
   pokemon.favorite = !pokemon.favorite;
