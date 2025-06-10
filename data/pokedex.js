@@ -12621,7 +12621,7 @@ const medals = {
 const events = {
   gofest: {
     title: "Global Go-Fest 2025",
-    total: 45,
+    total: 79,
     data: [
       // Eggs
   // 🛡️ Raid Bosses & Special Research
