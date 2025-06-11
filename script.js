@@ -116,7 +116,7 @@ function goHome() {
         <div id="medals-section" class="collections">
           ${Object.entries(medals).map(([key, dex]) => `
             <div class="collection-card" onclick="renderPokedex('${key}')">
-              <div class="card-icon">📘</div>
+              <div class="card-icon">📗</div>
               <div class="card-content">
                 <h2>${dex.title}</h2>
                 <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
@@ -131,7 +131,7 @@ function goHome() {
         <div id="events-section" class="collections">
           ${Object.entries(events).map(([key, dex]) => `
             <div class="collection-card" onclick="renderPokedex('${key}')">
-              <div class="card-icon">📘</div>
+              <div class="card-icon">📕</div>
               <div class="card-content">
                 <h2>${dex.title}</h2>
                 <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
@@ -197,11 +197,11 @@ const tcgHTML = `
       <div class="settings-container">
         <i class="fas fa-cog settings-icon" onclick="toggleTCGSettingsModal()"></i>
       </div>
-    <h1>TCG Pocket Sets</h1>
+    <h1>TCG Pocket Checklist</h1>
     <div id="tcg-sets-section" class="collections">
       ${Object.entries(tcgSets).map(([key, set]) => `
         <div class="collection-card" onclick="renderTCGSet('${key}')">
-          <div class="card-icon">🃏</div>
+          <div class="card-icon">📔</div>
           <div class="card-content">
             <h2>${set.title}</h2>
             <p>${getCaughtCount(set.data)} / ${set.total} (${getPercentage(set.data)}%)</p>
@@ -236,7 +236,7 @@ const tcgHTML = `
   // Cards Section
   const cardsHTML = `
     <div id="cards-section" class="section" style="display:none;">
-      <h1>Cards Checklist</h1>
+      <h1>Pokemon Cards Checklist</h1>
       <p style="margin: 15px;">Coming soon...</p>
     </div>
   `;
