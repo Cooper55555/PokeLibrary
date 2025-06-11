@@ -209,6 +209,9 @@ const tcgHTML = `
         </div>
       `).join('')}
     </div>
+      <div class="copyright-container">
+        <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+      </div>
   </div>
 
         <div id="settings-modal-tcg" class="modal hidden">
