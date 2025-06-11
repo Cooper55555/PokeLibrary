@@ -1,7 +1,7 @@
 const pokedexes = {
   lucky: {
     title: "Lucky Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -1058,7 +1058,7 @@ const pokedexes = {
   },
   pokedex: {
     title: "Normal Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -2070,7 +2070,7 @@ const pokedexes = {
   },
   shiny: {
     title: "Shiny Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -3243,7 +3243,7 @@ const pokedexes = {
   },
   perfect: {
     title: "Perfect Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -4255,7 +4255,7 @@ const pokedexes = {
   },
   perfectshiny: {
     title: "Perfect Shiny Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -5267,7 +5267,7 @@ const pokedexes = {
   },
   XXL: {
     title: "XXL Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -6279,7 +6279,7 @@ const pokedexes = {
   },
   XXS: {
     title: "XXS Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -7291,7 +7291,7 @@ const pokedexes = {
   },
   shadow: {
     title: "Shadow Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -8303,7 +8303,7 @@ const pokedexes = {
   },
   shadowshiny: {
     title: "Shadow Shiny Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -9315,7 +9315,7 @@ const pokedexes = {
   },
   purified: {
     title: "Purified Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -10327,7 +10327,7 @@ const pokedexes = {
   },
   purifiedshiny: {
     title: "Purified Shiny Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -11339,7 +11339,7 @@ const pokedexes = {
   },
   perfectpurified: {
     title: "Perfect Purified Pokedex",
-    total: 1008,
+    total: 1006,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -12735,6 +12735,13 @@ const tcgSets = {
   { name: "Bulbasaur", number: "1", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000010_00_FUSHIGIDANE_C.webp?width=350&quality=100", caught: false },
   { name: "Ivysaur", number: "2", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000020_00_FUSHIGISOU_U.webp?width=350&quality=100", caught: false },
   { name: "Venusaur", number: "3", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000030_00_FUSHIGIBANA_R.webp?width=350&quality=100", caught: false },
+  { name: "Venusaur EX", number: "4", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000040_00_FUSHIGIBANAex_RR.webp?width=350&quality=100", caught: false },
+  { name: "Caterpie", number: "5", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000050_00_CATERPIE_C.webp?width=350&quality=100", caught: false },
+  { name: "Metapod", number: "6", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000060_00_TRANSEL_C.webp?width=350&quality=100", caught: false },
+  { name: "Butterfree", number: "7", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000070_00_BUTTERFREE_R.webp?width=350&quality=100", caught: false },
+  { name: "Weedle", number: "8", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000080_00_BEEDLE_C.webp?width=350&quality=100", caught: false },
+  { name: "Kakuna", number: "9", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000090_00_COCOON_C.webp?width=350&quality=100", caught: false },
+  { name: "Beedrill", number: "10", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000100_00_SPEAR_R.webp?width=350&quality=100", caught: false },
     ]
   },
 };

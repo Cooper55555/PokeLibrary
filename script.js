@@ -80,7 +80,7 @@ function goHome() {
   // Navbar HTML
   const navbarHTML = `
     <nav id="main-navbar" class="navbar">
-      <div class="navbar-logo">POKELIBRARY</div>
+      <div class="navbar-logo">PokeLibrary</div>
       <div class="navbar-links">
         <button class="nav-btn active" data-section="pogo-section">POGO</button>
         <button class="nav-btn" data-section="tcg-section">TCG</button>
@@ -176,7 +176,7 @@ function goHome() {
 
           <div class="switch-container">
             <label class="switch">
-              <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+              <input type="checkbox" class="dark-mode-toggle" onchange="toggleDarkMode()">
               <span class="slider"></span>
             </label>
             <span>Dark Mode</span>
@@ -194,6 +194,9 @@ function goHome() {
   // Placeholder TCG Section
 const tcgHTML = `
   <div id="tcg-section" class="section" style="display:none;">
+      <div class="settings-container">
+        <i class="fas fa-cog settings-icon" onclick="toggleTCGSettingsModal()"></i>
+      </div>
     <h1>TCG Pocket Sets</h1>
     <div id="tcg-sets-section" class="collections">
       ${Object.entries(tcgSets).map(([key, set]) => `
@@ -207,6 +210,27 @@ const tcgHTML = `
       `).join('')}
     </div>
   </div>
+
+        <div id="settings-modal-tcg" class="modal hidden">
+        <div class="modal-content">
+          <span class="close-button" onclick="toggleTCGSettingsModal()">×</span>
+          <h2>Settings</h2>
+
+          <div class="switch-container">
+  <label class="switch">
+    <input type="checkbox" class="dark-mode-toggle" onchange="toggleDarkMode()">
+    <span class="slider"></span>
+  </label>
+  <span>Dark Mode</span>
+</div>
+
+          <div class="social-button-container">
+            <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
+            <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
 `;
 
   // Cards Section
@@ -242,6 +266,16 @@ const tcgHTML = `
   });
 }
 
+function toggleTCGSettingsModal() {
+  const modal = document.getElementById("settings-modal-tcg");
+  modal.classList.toggle("hidden");
+
+  if (!modal.classList.contains("hidden")) {
+    syncToggleWithDarkMode();
+    // Add other syncs if needed
+  }
+}
+
 function toggleSettingsModal() {
   const modal = document.getElementById("settings-modal");
   modal.classList.toggle("hidden");
@@ -255,19 +289,29 @@ function toggleSettingsModal() {
 }
 
 function toggleDarkMode() {
-  const toggle = document.getElementById("darkModeToggle");
-  const isDarkMode = toggle.checked;
-  document.body.classList.toggle("dark-mode", isDarkMode);
-  localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+  // Get the actual current state from localStorage
+  const currentState = localStorage.getItem("darkMode") === "enabled";
+  const newState = !currentState;
+
+  // Apply new state
+  document.body.classList.toggle("dark-mode", newState);
+  localStorage.setItem("darkMode", newState ? "enabled" : "disabled");
+
+  // Sync all toggle checkboxes
+  const toggles = document.querySelectorAll(".dark-mode-toggle");
+  toggles.forEach(t => {
+    t.checked = newState;
+  });
 }
 
 function syncToggleWithDarkMode() {
-  const toggle = document.getElementById("darkModeToggle");
   const isDarkMode = localStorage.getItem("darkMode") === "enabled";
-  if (toggle) {
-    toggle.checked = isDarkMode;
-  }
   document.body.classList.toggle("dark-mode", isDarkMode);
+
+  const toggles = document.querySelectorAll(".dark-mode-toggle");
+  toggles.forEach(toggle => {
+    toggle.checked = isDarkMode;
+  });
 }
 
 function toggleSectionVisibility(sectionId, isVisible) {
@@ -333,18 +377,34 @@ const filteredCards = set.data.filter(card => {
     `;
   }).join("");
 
-  app.innerHTML = `
-    <div class="top-bar">
-      <button class="back-button" onclick="goHome()">← Back</button>
-      </div>
-      <h1>${set.title}</h1>
-      <h1 id="caught-counter">(${getCaughtCount(set.data)} / ${set.total})</h1>
-    ${renderFilterControls(setKey, filter, 'tcg')}
-    <div class="search-bar">
-      <input id="search-${setKey}" type="text" placeholder="Search..." />
+app.innerHTML = `
+  <div class="top-bar">
+    <button class="back-button" onclick="goHome()">← Back</button>
+    <div class="settings-container-2">
+      <i class="fas fa-cog settings-icon" onclick="toggleSecondSettingsModal()"></i>
     </div>
-    <div class="pokedex-grid">${cardsHTML}</div>
-  `;
+  </div>
+  <h1>${set.title}</h1>
+  <h1 id="caught-counter">(${getCaughtCount(set.data)} / ${set.total})</h1>
+  ${renderFilterControls(setKey, filter, 'tcg')}
+  <div class="search-bar">
+    <input id="search-${setKey}" type="text" placeholder="Search..." />
+  </div>
+  <div class="pokedex-grid">${cardsHTML}</div>
+
+  <div class="copyright-container">
+    <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+  </div>
+
+  <div id="second-settings-modal" class="modal hidden second-modal">
+    <div class="modal-content second-modal-content">
+      <span class="close-button" onclick="toggleSecondSettingsModal()">×</span>
+      <h2>Settings</h2>
+      ${renderRegionButtons(setKey)}
+      <button class="download-button" onclick="downloadPDF('${setKey}')">Download PDF</button>
+    </div>
+  </div>
+`;
 
 const searchInput = document.getElementById(`search-${setKey}`);
 searchInput.value = currentSearch[setKey] || "";
@@ -477,6 +537,10 @@ function renderPokedex(key, filter = "all") {
           </div>
         `;
       }).join('')}
+    </div>
+
+    <div class="copyright-container">
+      <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
     </div>
 
     <div id="second-settings-modal" class="modal hidden second-modal">
@@ -854,7 +918,7 @@ const REGION_BREAKS_MEGA = [
 ];
 
 function downloadPDF(key) {
-  const pokedex = pokedexes[key] || medals[key] || events[key];
+  const pokedex = pokedexes[key] || medals[key] || events[key]  || tcgSets[key];
   const { jsPDF } = window.jspdf;
 
   const doc = new jsPDF();
