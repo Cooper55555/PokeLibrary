@@ -877,7 +877,7 @@ const REGION_BREAKS_STANDARD = [
   { name: "Galar", index: 807 },
   { name: "Hisui", index: 896 },
   { name: "Paldea", index: 903 },
-  { name: "Unidentified", index: 1004 },
+  { name: "Unidentified", index: 1005 },
 ];
 
 const REGION_BREAKS_GOFEST = [
