@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadCaughtStatus();
+  loadTCGSets();
 
   // New code: load last position
   const lastViewKey = localStorage.getItem("lastViewKey");
@@ -71,114 +72,174 @@ const currentSearch = {};
 const selectedRegion = {};
 
 function goHome() {
-
   localStorage.removeItem("lastViewKey");
   localStorage.removeItem("lastViewFilter");
 
   const app = document.getElementById("app");
-  app.innerHTML = `
-    <div class="settings-container">
-      <i class="fas fa-cog settings-icon" onclick="toggleSettingsModal()"></i>
-    </div>
 
-    <div id="pokedexes-container">
-      <h1>Pokemon Go Pokedexes</h1>
-      <div id="pokedexes-section" class="collections">
-        ${Object.entries(pokedexes).map(([key, dex]) => `
-          <div class="collection-card" onclick="renderPokedex('${key}')">
-            <div class="card-icon">📘</div>
-            <div class="card-content">
-              <h2>${dex.title}</h2>
-              <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
-            </div>
-          </div>
-        `).join('')}
+  // Navbar HTML
+  const navbarHTML = `
+    <nav id="main-navbar" class="navbar">
+      <div class="navbar-logo">POKELIBRARY</div>
+      <div class="navbar-links">
+        <button class="nav-btn active" data-section="pogo-section">POGO</button>
+        <button class="nav-btn" data-section="tcg-section">TCG</button>
+        <button class="nav-btn" data-section="cards-section">CARDS</button>
       </div>
-    </div>
+    </nav>
+  `;
 
-    <div id="medals-container">
-      <h1>Pokemon Go Medals</h1>
-      <div id="medals-section" class="collections">
-        ${Object.entries(medals).map(([key, dex]) => `
-          <div class="collection-card" onclick="renderPokedex('${key}')">
-            <div class="card-icon">📘</div>
-            <div class="card-content">
-              <h2>${dex.title}</h2>
-              <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
-            </div>
-          </div>
-        `).join('')}
+  // POGO Section with your existing content
+  const pogoHTML = `
+    <div id="pogo-section" class="section active">
+      <div class="settings-container">
+        <i class="fas fa-cog settings-icon" onclick="toggleSettingsModal()"></i>
       </div>
-    </div>
 
-    <div id="events-container">
-      <h1>Pokemon Go Events</h1>
-      <div id="events-section" class="collections">
-        ${Object.entries(events).map(([key, dex]) => `
-          <div class="collection-card" onclick="renderPokedex('${key}')">
-            <div class="card-icon">📘</div>
-            <div class="card-content">
-              <h2>${dex.title}</h2>
-              <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+      <div id="pokedexes-container">
+        <h1>Pokemon Go Pokedexes</h1>
+        <div id="pokedexes-section" class="collections">
+          ${Object.entries(pokedexes).map(([key, dex]) => `
+            <div class="collection-card" onclick="renderPokedex('${key}')">
+              <div class="card-icon">📘</div>
+              <div class="card-content">
+                <h2>${dex.title}</h2>
+                <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+              </div>
             </div>
-          </div>
-        `).join('')}
+          `).join('')}
+        </div>
       </div>
-    </div>
 
-    <div class="copyright-container">
-      <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
-    </div>
-
-    <div id="settings-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close-button" onclick="toggleSettingsModal()">×</span>
-        <h2>Settings</h2>
-
-        <div class="switch-container">
-          <label class="switch">
-            <input type="checkbox" id="togglePokedexes" onchange="toggleSectionVisibility('pokedexes-container', this.checked)">
-            <span class="slider"></span>
-          </label>
-          <span>Show Pokedexes</span>
+      <div id="medals-container">
+        <h1>Pokemon Go Medals</h1>
+        <div id="medals-section" class="collections">
+          ${Object.entries(medals).map(([key, dex]) => `
+            <div class="collection-card" onclick="renderPokedex('${key}')">
+              <div class="card-icon">📘</div>
+              <div class="card-content">
+                <h2>${dex.title}</h2>
+                <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+              </div>
+            </div>
+          `).join('')}
         </div>
+      </div>
 
-        <div class="switch-container">
-          <label class="switch">
-            <input type="checkbox" id="toggleMedals" onchange="toggleSectionVisibility('medals-container', this.checked)">
-            <span class="slider"></span>
-          </label>
-          <span>Show Medals</span>
+      <div id="events-container">
+        <h1>Pokemon Go Events</h1>
+        <div id="events-section" class="collections">
+          ${Object.entries(events).map(([key, dex]) => `
+            <div class="collection-card" onclick="renderPokedex('${key}')">
+              <div class="card-icon">📘</div>
+              <div class="card-content">
+                <h2>${dex.title}</h2>
+                <p>${getCaughtCount(dex.data)} / ${dex.total} (${getPercentage(dex.data)}%)</p>
+              </div>
+            </div>
+          `).join('')}
         </div>
+      </div>
 
-        <div class="switch-container">
-          <label class="switch">
-            <input type="checkbox" id="toggleEvents" onchange="toggleSectionVisibility('events-container', this.checked)">
-            <span class="slider"></span>
-          </label>
-          <span>Show Events</span>
-        </div>
+      <div class="copyright-container">
+        <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+      </div>
 
-        <div class="switch-container">
-          <label class="switch">
-            <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
-            <span class="slider"></span>
-          </label>
-          <span>Dark Mode</span>
-        </div>
+      <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close-button" onclick="toggleSettingsModal()">×</span>
+          <h2>Settings</h2>
 
-        <div class="social-button-container">
-          <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
-          <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+          <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="togglePokedexes" onchange="toggleSectionVisibility('pokedexes-container', this.checked)">
+              <span class="slider"></span>
+            </label>
+            <span>Show Pokedexes</span>
+          </div>
+
+          <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="toggleMedals" onchange="toggleSectionVisibility('medals-container', this.checked)">
+              <span class="slider"></span>
+            </label>
+            <span>Show Medals</span>
+          </div>
+
+          <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="toggleEvents" onchange="toggleSectionVisibility('events-container', this.checked)">
+              <span class="slider"></span>
+            </label>
+            <span>Show Events</span>
+          </div>
+
+          <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+              <span class="slider"></span>
+            </label>
+            <span>Dark Mode</span>
+          </div>
+
+          <div class="social-button-container">
+            <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
+            <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+          </div>
         </div>
       </div>
     </div>
   `;
 
+  // Placeholder TCG Section
+const tcgHTML = `
+  <div id="tcg-section" class="section" style="display:none;">
+    <h1>TCG Pocket Sets</h1>
+    <div id="tcg-sets-section" class="collections">
+      ${Object.entries(tcgSets).map(([key, set]) => `
+        <div class="collection-card" onclick="renderTCGSet('${key}')">
+          <div class="card-icon">🃏</div>
+          <div class="card-content">
+            <h2>${set.title}</h2>
+            <p>${getCaughtCount(set.data)} / ${set.total} (${getPercentage(set.data)}%)</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>
+`;
+
+  // Cards Section
+  const cardsHTML = `
+    <div id="cards-section" class="section" style="display:none;">
+      <h1>Cards Checklist</h1>
+      <p style="margin: 15px;">Coming soon...</p>
+    </div>
+  `;
+
+  // Inject content
+  app.innerHTML = navbarHTML + pogoHTML + tcgHTML + cardsHTML;
+
+  // Sync toggles and dark mode
   syncToggleWithDarkMode();
   syncToggleSectionVisibility('pokedexes-container', 'togglePokedexes', true);
   syncToggleSectionVisibility('medals-container', 'toggleMedals', true);
   syncToggleSectionVisibility('events-container', 'toggleEvents', true);
+
+  // Navigation logic
+  const navButtons = document.querySelectorAll(".nav-btn");
+  navButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      navButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const sectionId = btn.getAttribute("data-section");
+      document.querySelectorAll(".section").forEach(section => {
+        section.style.display = (section.id === sectionId) ? "" : "none";
+        section.classList.toggle("active", section.id === sectionId);
+      });
+    });
+  });
 }
 
 function toggleSettingsModal() {
@@ -239,6 +300,106 @@ document.addEventListener("DOMContentLoaded", () => {
   syncToggleSectionVisibility('events-section', 'toggleEvents', true);
 });
 
+function renderTCGSet(setKey, filter = "all") {
+  currentFilter[setKey] = filter;
+  
+  const set = tcgSets[setKey];
+  if (!set) return console.error(`TCG set not found: ${setKey}`);
+  const app = document.getElementById("app");
+
+const searchTerm = currentSearch[setKey]?.toLowerCase() || "";
+const filteredCards = set.data.filter(card => {
+  const matchesFilter =
+    currentFilter[setKey] === "have" ? card.caught :
+    currentFilter[setKey] === "need" ? !card.caught :
+    currentFilter[setKey] === "favorite" ? card.favorite :
+    true;
+
+  const matchesSearch = card.name.toLowerCase().includes(searchTerm) || card.number.includes(searchTerm);
+  return matchesFilter && matchesSearch;
+});
+
+  const cardsHTML = filteredCards.map((card, i) => {
+    return `
+      <div class="pokemon-card ${card.caught ? 'caught' : ''}" onclick="toggleTCGCard('${setKey}', ${i})">
+        <img src="${card.img}" alt="${card.name}" />
+        <div>${card.name}</div>
+        <div>${card.number}</div>
+        ${card.caught ? '<div class="checkmark">✔️</div>' : ''}
+        <div class="favorite-icon" onclick="event.stopPropagation(); toggleTCGFavorite('${setKey}', ${i}, this)">
+          ${card.favorite ? '🌝' : '🌚'}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="top-bar">
+      <button class="back-button" onclick="goHome()">← Back</button>
+      </div>
+      <h1>${set.title}</h1>
+      <h1 id="caught-counter">(${getCaughtCount(set.data)} / ${set.total})</h1>
+    ${renderFilterControls(setKey, filter, 'tcg')}
+    <div class="search-bar">
+      <input id="search-${setKey}" type="text" placeholder="Search..." />
+    </div>
+    <div class="pokedex-grid">${cardsHTML}</div>
+  `;
+
+const searchInput = document.getElementById(`search-${setKey}`);
+searchInput.value = currentSearch[setKey] || "";
+
+searchInput.addEventListener("input", (e) => {
+  const input = e.target;
+  const value = input.value;
+  const start = input.selectionStart;
+  const end = input.selectionEnd;
+
+  currentSearch[setKey] = value;
+  renderTCGSet(setKey, currentFilter[setKey]);
+
+  // Restore focus and cursor position after re-render
+  const newInput = document.getElementById(`search-${setKey}`);
+  newInput.focus();
+  newInput.setSelectionRange(start, end);
+});
+}
+
+function toggleTCGCard(setKey, cardIndex) {
+  const card = tcgSets[setKey].data[cardIndex];
+  card.caught = !card.caught;
+  localStorage.setItem("tcgSets", JSON.stringify(tcgSets));
+  renderTCGSet(setKey, currentFilter[setKey] || "all");
+}
+
+function toggleTCGFavorite(setKey, cardIndex, iconElement) {
+  const card = tcgSets[setKey].data[cardIndex];
+  card.favorite = !card.favorite;
+  iconElement.innerHTML = card.favorite ? '🌝' : '🌚';
+  localStorage.setItem("tcgSets", JSON.stringify(tcgSets));
+}
+
+function loadTCGSets() {
+  const saved = localStorage.getItem("tcgSets");
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    for (const key in parsed) {
+      if (tcgSets[key]) {
+        // Merge saved data with current cards
+        const savedData = parsed[key].data;
+        const currentData = tcgSets[key].data;
+
+        for (let i = 0; i < currentData.length; i++) {
+          if (savedData[i]) {
+            currentData[i].caught = savedData[i].caught ?? false;
+            currentData[i].favorite = savedData[i].favorite ?? false;
+          }
+        }
+      }
+    }
+  }
+}
+
 function renderPokedex(key, filter = "all") {
   const pokedex = pokedexes[key] || medals[key] || events[key];
   if (!pokedex) {
@@ -289,7 +450,7 @@ function renderPokedex(key, filter = "all") {
   app.innerHTML = `
     <div class="top-bar">
       <button class="back-button" onclick="goHome()">← Back</button>
-      <div class="settings-container">
+      <div class="settings-container-2">
       <i class="fas fa-cog settings-icon" onclick="toggleSecondSettingsModal()"></i>
       </div>
     </div>
@@ -391,13 +552,14 @@ function toggleSecondSettingsModal() {
   modal.classList.toggle('hidden');
 }
 
-function renderFilterControls(key, selected) {
+function renderFilterControls(key, selected, type = 'pokedex') {
+  const handler = type === 'tcg' ? 'renderTCGSet' : 'renderPokedex';
   return `
     <div class="filter-bar">
-      <button class="${selected === 'all' ? 'active' : ''}" onclick="renderPokedex('${key}', 'all')">All</button>
-      <button class="${selected === 'have' ? 'active' : ''}" onclick="renderPokedex('${key}', 'have')">Have</button>
-      <button class="${selected === 'need' ? 'active' : ''}" onclick="renderPokedex('${key}', 'need')">Need</button>
-      <button class="${selected === 'favorite' ? 'active' : ''}" onclick="renderPokedex('${key}', 'favorite')">Favorite</button>
+      <button class="${selected === 'all' ? 'active' : ''}" onclick="${handler}('${key}', 'all')">All</button>
+      <button class="${selected === 'have' ? 'active' : ''}" onclick="${handler}('${key}', 'have')">Have</button>
+      <button class="${selected === 'need' ? 'active' : ''}" onclick="${handler}('${key}', 'need')">Need</button>
+      <button class="${selected === 'favorite' ? 'active' : ''}" onclick="${handler}('${key}', 'favorite')">Favorite</button>
     </div>
   `;
 }

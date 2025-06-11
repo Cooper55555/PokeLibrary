@@ -12726,3 +12726,15 @@ const events = {
     ]
   },
 };
+
+const tcgSets = {
+    genetic: {
+    title: "Genetic Apex",
+    total: 286,
+    data: [
+  { name: "Bulbasaur", number: "1", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000010_00_FUSHIGIDANE_C.webp?width=350&quality=100", caught: false },
+  { name: "Ivysaur", number: "2", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000020_00_FUSHIGISOU_U.webp?width=350&quality=100", caught: false },
+  { name: "Venusaur", number: "3", img: "https://assets.pokemon-zone.com/game-assets/CardPreviews/cPK_10_000030_00_FUSHIGIBANA_R.webp?width=350&quality=100", caught: false },
+    ]
+  },
+};
