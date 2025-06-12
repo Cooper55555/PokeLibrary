@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadCaughtStatus();
   loadTCGSets();
+  loadCardSets();  // Load saved card states
 
   // New code: load last position
   const lastViewKey = localStorage.getItem("lastViewKey");
@@ -197,7 +198,7 @@ const tcgHTML = `
       <div class="settings-container">
         <i class="fas fa-cog settings-icon" onclick="toggleTCGSettingsModal()"></i>
       </div>
-    <h1>TCG Pocket Checklist</h1>
+    <h1>TCG Pocket Sets</h1>
     <div id="tcg-sets-section" class="collections">
       ${Object.entries(tcgSets).map(([key, set]) => `
         <div class="collection-card" onclick="renderTCGSet('${key}')">
@@ -238,10 +239,46 @@ const tcgHTML = `
 
   // Cards Section
   const cardsHTML = `
-    <div id="cards-section" class="section" style="display:none;">
-      <h1>Pokemon Cards Checklist</h1>
-      <p style="margin: 15px;">Coming soon...</p>
-    </div>
+<div id="cards-section" class="section" style="display:none;">
+  <div class="settings-container">
+    <i class="fas fa-cog settings-icon" onclick="toggleCardHomeSettingsModal()"></i>
+  </div>
+  <h1>Pokemon Card Sets</h1>
+  <div id="card-sets-section" class="collections">
+    ${Object.entries(cardSets).map(([key, set]) => `
+      <div class="collection-card" onclick="renderCardSet('${key}')">
+        <div class="card-icon">📒</div>
+        <div class="card-content">
+          <h2>${set.title}</h2>
+          <p>${getCaughtCount(set.data)} / ${set.total} (${getPercentage(set.data)}%)</p>
+        </div>
+      </div>
+    `).join("")}
+  </div>
+
+  <div class="copyright-container">
+    <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+  </div>
+
+<div id="card-home-settings-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-button" onclick="toggleCardHomeSettingsModal()">×</span>
+    <h2>Settings</h2>
+          <div class="switch-container">
+  <label class="switch">
+    <input type="checkbox" class="dark-mode-toggle" onchange="toggleDarkMode()">
+    <span class="slider"></span>
+  </label>
+  <span>Dark Mode</span>
+</div>
+
+          <div class="social-button-container">
+            <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
+            <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+          </div>
+  </div>
+</div>
+</div>
   `;
 
   // Inject content
@@ -277,6 +314,11 @@ function toggleTCGSettingsModal() {
     syncToggleWithDarkMode();
     // Add other syncs if needed
   }
+}
+
+function toggleCardHomeSettingsModal() {
+  const modal = document.getElementById('card-home-settings-modal');
+  if (modal) modal.classList.toggle('hidden');
 }
 
 function toggleSettingsModal() {
@@ -334,6 +376,123 @@ function syncToggleSectionVisibility(sectionId, toggleId, defaultVisible) {
   if (section && toggle) {
     section.style.display = isVisible ? '' : 'none';
     toggle.checked = isVisible;
+  }
+}
+
+function renderCardSet(setKey, filter = "all") {
+  currentFilter[setKey] = filter;
+
+  const set = cardSets[setKey];
+  if (!set) return console.error(`Card set not found: ${setKey}`);
+
+  const app = document.getElementById("app");
+  const searchTerm = currentSearch[setKey]?.toLowerCase() || "";
+
+  const filteredCards = set.data.filter(card => {
+    const matchesFilter =
+      filter === "have" ? card.caught :
+      filter === "need" ? !card.caught :
+      filter === "favorite" ? card.favorite :
+      true;
+
+    const matchesSearch = card.name.toLowerCase().includes(searchTerm) || card.number.includes(searchTerm);
+    return matchesFilter && matchesSearch;
+  });
+
+  const cardsHTML = filteredCards.map((card, i) => `
+    <div class="pokemon-card ${card.caught ? 'caught' : ''}" onclick="toggleCard('${setKey}', ${i})">
+      <img src="${card.img}" alt="${card.name}" />
+      <div>${card.name}</div>
+      <div>${card.number}</div>
+      ${card.caught ? '<div class="checkmark">✔️</div>' : ''}
+      <div class="favorite-icon" onclick="event.stopPropagation(); toggleCardFavorite('${setKey}', ${i}, this)">
+        ${card.favorite ? '🌝' : '🌚'}
+      </div>
+    </div>
+  `).join("");
+
+  app.innerHTML = `
+    <div class="top-bar">
+      <button class="back-button" onclick="goHome()">← Back</button>
+      <div class="settings-container-2">
+        <i class="fas fa-cog settings-icon" onclick="toggleCardsSettingsModal()"></i>
+      </div>
+    </div>
+    <h1>${set.title}</h1>
+    <h1 id="caught-counter">(${getCaughtCount(set.data)} / ${set.total})</h1>
+    ${renderFilterControls(setKey, filter, 'cards')}
+    <div class="search-bar">
+      <input id="search-${setKey}" type="text" placeholder="Search..." />
+    </div>
+    <div class="pokedex-grid">${cardsHTML}</div>
+    <div class="copyright-container">
+      <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+    </div>
+
+    <div id="card-settings-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-button" onclick="toggleCardsSettingsModal()">×</span>
+    <h2>Settings</h2>
+      ${renderRegionButtons(setKey)}
+      <button class="download-button" onclick="downloadPDF('${setKey}')">Download PDF</button>
+  </div>
+</div>
+  `;
+
+  const searchInput = document.getElementById(`search-${setKey}`);
+  searchInput.value = currentSearch[setKey] || "";
+
+  searchInput.addEventListener("input", (e) => {
+    const input = e.target;
+    const value = input.value;
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
+
+    currentSearch[setKey] = value;
+    renderCardSet(setKey, currentFilter[setKey]);
+
+    const newInput = document.getElementById(`search-${setKey}`);
+    newInput.focus();
+    newInput.setSelectionRange(start, end);
+  });
+}
+
+function toggleCardsSettingsModal() {
+  const modal = document.getElementById('card-settings-modal');
+  if (modal) modal.classList.toggle('hidden');
+}
+
+function toggleCard(setKey, index) {
+  const card = cardSets[setKey].data[index];
+  card.caught = !card.caught;
+  localStorage.setItem("cardSets", JSON.stringify(cardSets));  // Save state to localStorage
+  renderCardSet(setKey, currentFilter[setKey] || "all");
+}
+
+function toggleCardFavorite(setKey, index, iconElement) {
+  const card = cardSets[setKey].data[index];
+  card.favorite = !card.favorite;
+  iconElement.innerHTML = card.favorite ? '🌝' : '🌚';
+  localStorage.setItem("cardSets", JSON.stringify(cardSets));  // Save state to localStorage
+}
+
+function loadCardSets() {
+  const saved = localStorage.getItem("cardSets");
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    for (const key in parsed) {
+      if (cardSets[key]) {
+        const savedData = parsed[key].data;
+        const currentData = cardSets[key].data;
+
+        for (let i = 0; i < currentData.length; i++) {
+          if (savedData[i]) {
+            currentData[i].caught = savedData[i].caught ?? false;
+            currentData[i].favorite = savedData[i].favorite ?? false;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -620,7 +779,11 @@ function toggleSecondSettingsModal() {
 }
 
 function renderFilterControls(key, selected, type = 'pokedex') {
-  const handler = type === 'tcg' ? 'renderTCGSet' : 'renderPokedex';
+  let handler;
+  if (type === 'tcg') handler = 'renderTCGSet';
+  else if (type === 'cards') handler = 'renderCardSet';
+  else handler = 'renderPokedex';
+
   return `
     <div class="filter-bar">
       <button class="${selected === 'all' ? 'active' : ''}" onclick="${handler}('${key}', 'all')">All</button>
@@ -921,7 +1084,7 @@ const REGION_BREAKS_MEGA = [
 ];
 
 function downloadPDF(key) {
-  const pokedex = pokedexes[key] || medals[key] || events[key]  || tcgSets[key];
+  const pokedex = pokedexes[key] || medals[key] || events[key]  || tcgSets[key] || cardSets[key];
   const { jsPDF } = window.jspdf;
 
   const doc = new jsPDF();
