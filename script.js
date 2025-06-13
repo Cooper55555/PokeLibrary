@@ -198,7 +198,8 @@ const tcgHTML = `
       <div class="settings-container">
         <i class="fas fa-cog settings-icon" onclick="toggleTCGSettingsModal()"></i>
       </div>
-    <h1>TCG Pocket Sets</h1>
+      <div id="tcgset-container">
+    <h1>Pokemon TCG Pocket Sets</h1>
     <div id="tcg-sets-section" class="collections">
       ${Object.entries(tcgSets).map(([key, set]) => `
         <div class="collection-card" onclick="renderTCGSet('${key}')">
@@ -210,6 +211,7 @@ const tcgHTML = `
         </div>
       `).join('')}
     </div>
+  </div>
       <div class="copyright-container">
         <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
       </div>
@@ -219,6 +221,14 @@ const tcgHTML = `
         <div class="modal-content">
           <span class="close-button" onclick="toggleTCGSettingsModal()">×</span>
           <h2>Settings</h2>
+
+                    <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="toggleTcgset" onchange="toggleSectionVisibility('tcgset-container', this.checked)">
+              <span class="slider"></span>
+            </label>
+            <span>Show TCG Pocket Sets</span>
+          </div>
 
           <div class="switch-container">
   <label class="switch">
@@ -243,7 +253,8 @@ const tcgHTML = `
   <div class="settings-container">
     <i class="fas fa-cog settings-icon" onclick="toggleCardHomeSettingsModal()"></i>
   </div>
-  <h1>Pokemon Card Sets</h1>
+  <div id="baseset-container">
+    <h1>Pokemon Cards Base Set Series</h1>
   <div id="card-sets-section" class="collections">
     ${Object.entries(cardSets).map(([key, set]) => `
       <div class="collection-card" onclick="renderCardSet('${key}')">
@@ -255,6 +266,7 @@ const tcgHTML = `
       </div>
     `).join("")}
   </div>
+</div>
 
   <div class="copyright-container">
     <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
@@ -264,6 +276,15 @@ const tcgHTML = `
   <div class="modal-content">
     <span class="close-button" onclick="toggleCardHomeSettingsModal()">×</span>
     <h2>Settings</h2>
+
+              <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="toggleBaseset" onchange="toggleSectionVisibility('baseset-container', this.checked)">
+              <span class="slider"></span>
+            </label>
+            <span>Show Base Set Series</span>
+          </div>
+
           <div class="switch-container">
   <label class="switch">
     <input type="checkbox" class="dark-mode-toggle" onchange="toggleDarkMode()">
@@ -289,6 +310,8 @@ const tcgHTML = `
   syncToggleSectionVisibility('pokedexes-container', 'togglePokedexes', true);
   syncToggleSectionVisibility('medals-container', 'toggleMedals', true);
   syncToggleSectionVisibility('events-container', 'toggleEvents', true);
+  syncToggleSectionVisibility('baseset-container', 'toggleBaseset', true);
+  syncToggleSectionVisibility('tcgset-container', 'toggleTcgset', true);
 
   // Navigation logic
   const navButtons = document.querySelectorAll(".nav-btn");
@@ -330,6 +353,8 @@ function toggleSettingsModal() {
     syncToggleSectionVisibility('pokedexes-container', 'togglePokedexes', true);
     syncToggleSectionVisibility('medals-container', 'toggleMedals', true);
     syncToggleSectionVisibility('events-container', 'toggleEvents', true);
+    syncToggleSectionVisibility('baseset-container', 'toggleBaseset', true);
+    syncToggleSectionVisibility('tcgset-container', 'toggleTcgset', true);
   }
 }
 
