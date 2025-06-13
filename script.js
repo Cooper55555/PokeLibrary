@@ -433,7 +433,6 @@ function renderCardSet(setKey, filter = "all") {
   <div class="modal-content">
     <span class="close-button" onclick="toggleCardsSettingsModal()">×</span>
     <h2>Settings</h2>
-      ${renderRegionButtons(setKey)}
       <button class="download-button" onclick="downloadPDF('${setKey}')">Download PDF</button>
   </div>
 </div>
@@ -562,7 +561,6 @@ app.innerHTML = `
     <div class="modal-content second-modal-content">
       <span class="close-button" onclick="toggleSecondSettingsModal()">×</span>
       <h2>Settings</h2>
-      ${renderRegionButtons(setKey)}
       <button class="download-button" onclick="downloadPDF('${setKey}')">Download PDF</button>
     </div>
   </div>
@@ -709,7 +707,6 @@ function renderPokedex(key, filter = "all") {
       <div class="modal-content second-modal-content">
       <span class="close-button" onclick="toggleSecondSettingsModal()">×</span>
       <h2>Settings</h2>
-      ${renderRegionButtons(key)}  <!-- Insert here -->
       <button class="download-button" onclick="downloadPDF('${key}')">Download PDF</button>
       </div>
     </div>
