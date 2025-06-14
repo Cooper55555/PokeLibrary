@@ -185,7 +185,7 @@ function goHome() {
 
           <div class="social-button-container">
             <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
-            <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+            <a href="https://median.co/share/pkbddj#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
           </div>
         </div>
       </div>
@@ -240,7 +240,7 @@ const tcgHTML = `
 
           <div class="social-button-container">
             <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
-            <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+            <a href="https://median.co/share/pkbddj#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
           </div>
         </div>
       </div>
@@ -295,7 +295,7 @@ const tcgHTML = `
 
           <div class="social-button-container">
             <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
-            <a href="https://median.co/share/rrabnz#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
+            <a href="https://median.co/share/pkbddj#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
           </div>
   </div>
 </div>
