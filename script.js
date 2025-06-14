@@ -81,7 +81,7 @@ function goHome() {
   // Navbar HTML
   const navbarHTML = `
     <nav id="main-navbar" class="navbar">
-      <div class="navbar-logo">PokeLibrary</div>
+      <div class="navbar-logo">DataLibrary</div>
       <div class="navbar-links">
         <button class="nav-btn active" data-section="pogo-section">POGO</button>
         <button class="nav-btn" data-section="tcg-section">TCG</button>
