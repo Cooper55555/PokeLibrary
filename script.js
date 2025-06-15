@@ -81,7 +81,7 @@ function goHome() {
   // Navbar HTML
   const navbarHTML = `
     <nav id="main-navbar" class="navbar">
-      <div class="navbar-logo">DataLibrary</div>
+      <a href="https://cooper55555.github.io/DataLibrary/" class="navbar-logo">DataLibrary</a>
       <div class="navbar-links">
         <button class="nav-btn active" data-section="pogo-section">POGO</button>
         <button class="nav-btn" data-section="tcg-section">TCG</button>
@@ -98,7 +98,7 @@ function goHome() {
       </div>
 
       <div id="pokedexes-container">
-        <h1>Pokemon Go Pokedexes</h1>
+        <h1 id="pokedexes-title">Pokémon Go Pokedexes</h1>
         <div id="pokedexes-section" class="collections">
           ${Object.entries(pokedexes).map(([key, dex]) => `
             <div class="collection-card" onclick="renderPokedex('${key}')">
@@ -113,7 +113,7 @@ function goHome() {
       </div>
 
       <div id="medals-container">
-        <h1>Pokemon Go Medals</h1>
+        <h1 id="medals-title">Pokémon Go Medals</h1>
         <div id="medals-section" class="collections">
           ${Object.entries(medals).map(([key, dex]) => `
             <div class="collection-card" onclick="renderPokedex('${key}')">
@@ -128,7 +128,7 @@ function goHome() {
       </div>
 
       <div id="events-container">
-        <h1>Pokemon Go Events</h1>
+        <h1 id="events-title">Pokémon Go Events</h1>
         <div id="events-section" class="collections">
           ${Object.entries(events).map(([key, dex]) => `
             <div class="collection-card" onclick="renderPokedex('${key}')">
@@ -143,7 +143,7 @@ function goHome() {
       </div>
 
       <div class="copyright-container">
-        <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+        <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
       </div>
 
       <div id="settings-modal" class="modal hidden">
@@ -183,6 +183,18 @@ function goHome() {
             <span>Dark Mode</span>
           </div>
 
+<div class="language-title-container">
+  <label class="language-label" for="language">Choose A Language:</label>
+</div>
+<div class="language-container">
+  <select id="language">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+  </select>
+</div>
+
           <div class="social-button-container">
             <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
             <a href="https://median.co/share/pkbddj#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
@@ -199,7 +211,7 @@ const tcgHTML = `
         <i class="fas fa-cog settings-icon" onclick="toggleTCGSettingsModal()"></i>
       </div>
       <div id="tcgset-container">
-    <h1>Pokemon TCG Pocket Sets</h1>
+    <h1 id="tcgsets-title">Pokémon TCG Pocket Sets</h1>
     <div id="tcg-sets-section" class="collections">
       ${Object.entries(tcgSets).map(([key, set]) => `
         <div class="collection-card" onclick="renderTCGSet('${key}')">
@@ -213,7 +225,7 @@ const tcgHTML = `
     </div>
   </div>
       <div class="copyright-container">
-        <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+        <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
       </div>
   </div>
 
@@ -238,6 +250,18 @@ const tcgHTML = `
   <span>Dark Mode</span>
 </div>
 
+<div class="language-title-container">
+  <label class="language-label" for="language">Choose A Language:</label>
+</div>
+<div class="language-container">
+  <select id="language">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+  </select>
+</div>
+
           <div class="social-button-container">
             <a href="https://discord.gg/t5BGDzzSXg" target="_blank" class="social-button discord"><i class="fab fa-discord"></i></a>
             <a href="https://median.co/share/pkbddj#apk" target="_blank" class="social-button android"><i class="fab fa-android"></i></a>
@@ -254,7 +278,7 @@ const tcgHTML = `
     <i class="fas fa-cog settings-icon" onclick="toggleCardHomeSettingsModal()"></i>
   </div>
   <div id="baseset-container">
-    <h1>Pokemon Cards Base Set Series</h1>
+    <h1 id="baseset-title">Pokémon Cards Base Set Series</h1>
   <div id="card-sets-section" class="collections">
     ${Object.entries(cardSets).map(([key, set]) => `
       <div class="collection-card" onclick="renderCardSet('${key}')">
@@ -269,7 +293,7 @@ const tcgHTML = `
 </div>
 
   <div class="copyright-container">
-    <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+    <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
   </div>
 
 <div id="card-home-settings-modal" class="modal hidden">
@@ -291,6 +315,18 @@ const tcgHTML = `
     <span class="slider"></span>
   </label>
   <span>Dark Mode</span>
+</div>
+
+<div class="language-title-container">
+  <label class="language-label" for="language">Choose A Language:</label>
+</div>
+<div class="language-container">
+  <select id="language">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+  </select>
 </div>
 
           <div class="social-button-container">
@@ -357,6 +393,92 @@ function toggleSettingsModal() {
     syncToggleSectionVisibility('tcgset-container', 'toggleTcgset', true);
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const translations = {
+    en: {
+      pokedexesTitle: "Pokémon Go Pokedexes",
+      medalsTitle: "Pokémon Go Medals",
+      eventsTitle: "Pokémon Go Events",
+      basesetTitle: "Pokémon Cards Base Set Series",
+      tcgsetsTitle: "Pokémon TCG Pocket Sets",
+    },
+    es: {
+      pokedexesTitle: "Pokédex de Pokémon Go",
+      medalsTitle: "Medallas de Pokémon Go",
+      eventsTitle: "Eventos de Pokémon Go",
+      basesetTitle: "Serie base de cartas Pokémon",
+      tcgsetsTitle: "Sets de bolsillo de JCC Pokémon",
+    },
+    fr: {
+      pokedexesTitle: "Pokédex Pokémon Go",
+      medalsTitle: "Médailles Pokémon Go",
+      eventsTitle: "Événements Pokémon Go",
+      basesetTitle: "Série de cartes Pokémon de base",
+      tcgsetsTitle: "Coffrets de poche du JCC Pokémon",
+    },
+    de: {
+      pokedexesTitle: "Pokémon Go Pokédexe",
+      medalsTitle: "Pokémon Go Medaillen",
+      eventsTitle: "Pokémon Go Ereignisse",
+      basesetTitle: "Pokemon Karten Basisset Serie",
+      tcgsetsTitle: "Pokémon Sammelkartenspiel Taschensets",
+    }
+  };
+
+  const langSelect = document.getElementById("language");
+
+  function setLanguage(lang) {
+    const translation = translations[lang] || translations.en;
+
+    const pokedexTitle = document.getElementById("pokedexes-title");
+    const medalsTitle = document.getElementById("medals-title");
+    const eventsTitle = document.getElementById("events-title");
+    const basesetTitle = document.getElementById("baseset-title");
+    const tcgsetsTitle = document.getElementById("tcgsets-title");
+
+    if (pokedexTitle) pokedexTitle.textContent = translation.pokedexesTitle;
+    if (medalsTitle) medalsTitle.textContent = translation.medalsTitle;
+    if (eventsTitle) eventsTitle.textContent = translation.eventsTitle;
+    if (basesetTitle) basesetTitle.textContent = translation.basesetTitle;
+    if (tcgsetsTitle) tcgsetsTitle.textContent = translation.tcgsetsTitle;
+
+    localStorage.setItem("language", lang);
+    langSelect.value = lang;
+  }
+
+  const languageSelectors = document.querySelectorAll("#language");
+
+  function setLanguage(lang) {
+    const translation = translations[lang] || translations.en;
+
+    // Update headings
+    document.getElementById("pokedexes-title").textContent = translation.pokedexesTitle;
+    document.getElementById("medals-title").textContent = translation.medalsTitle;
+    document.getElementById("events-title").textContent = translation.eventsTitle;
+    document.getElementById("baseset-title").textContent = translation.basesetTitle;
+    document.getElementById("tcgsets-title").textContent = translation.tcgsetsTitle;
+
+    // Sync all language selects
+    languageSelectors.forEach(select => {
+      select.value = lang;
+    });
+
+    // Save to localStorage
+    localStorage.setItem("language", lang);
+  }
+
+  // Set language from saved preference or default
+  const savedLang = localStorage.getItem("language") || "en";
+  setLanguage(savedLang);
+
+  // Attach listener to all language dropdowns
+  languageSelectors.forEach(select => {
+    select.addEventListener("change", (e) => {
+      setLanguage(e.target.value);
+    });
+  });
+});
 
 function toggleDarkMode() {
   // Get the actual current state from localStorage
@@ -451,7 +573,7 @@ function renderCardSet(setKey, filter = "all") {
     </div>
     <div class="pokedex-grid">${cardsHTML}</div>
     <div class="copyright-container">
-      <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+      <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
     </div>
 
     <div id="card-settings-modal" class="modal hidden">
@@ -579,7 +701,7 @@ app.innerHTML = `
   <div class="pokedex-grid">${cardsHTML}</div>
 
   <div class="copyright-container">
-    <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+    <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
   </div>
 
   <div id="second-settings-modal" class="modal hidden second-modal">
@@ -725,7 +847,7 @@ function renderPokedex(key, filter = "all") {
     </div>
 
     <div class="copyright-container">
-      <h5>© 2025 PokeLibrary. This website has been made by Cooper.</h5>
+      <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
     </div>
 
     <div id="second-settings-modal" class="modal hidden second-modal">
