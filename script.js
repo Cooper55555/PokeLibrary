@@ -1059,13 +1059,13 @@ const REGION_BREAKS_STANDARD = [
   { name: "Johto", index: 151 },
   { name: "Hoenn", index: 251 },
   { name: "Sinnoh", index: 386 },
-  { name: "Unova", index: 493 },
-  { name: "Kalos", index: 649 },
-  { name: "Alola", index: 721 },
-  { name: "Galar", index: 807 },
-  { name: "Hisui", index: 896 },
-  { name: "Paldea", index: 903 },
-  { name: "Unidentified", index: 1005 },
+  { name: "Unova", index: 490 },
+  { name: "Kalos", index: 646 },
+  { name: "Alola", index: 715 },
+  { name: "Galar", index: 790 },
+  { name: "Hisui", index: 839 },
+  { name: "Paldea", index: 845 },
+  { name: "Unidentified", index: 895 },
 ];
 
 const REGION_BREAKS_GOFEST = [
