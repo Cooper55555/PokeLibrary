@@ -143,7 +143,7 @@ function goHome() {
       </div>
 
       <div class="copyright-container">
-        <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
+        <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
       </div>
 
       <div id="settings-modal" class="modal hidden">
@@ -225,7 +225,7 @@ const tcgHTML = `
     </div>
   </div>
       <div class="copyright-container">
-        <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
+        <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
       </div>
   </div>
 
@@ -293,7 +293,7 @@ const tcgHTML = `
 </div>
 
   <div class="copyright-container">
-    <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
+    <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
   </div>
 
 <div id="card-home-settings-modal" class="modal hidden">
@@ -573,7 +573,7 @@ function renderCardSet(setKey, filter = "all") {
     </div>
     <div class="pokedex-grid">${cardsHTML}</div>
     <div class="copyright-container">
-      <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
+      <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
     </div>
 
     <div id="card-settings-modal" class="modal hidden">
@@ -701,7 +701,7 @@ app.innerHTML = `
   <div class="pokedex-grid">${cardsHTML}</div>
 
   <div class="copyright-container">
-    <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
+    <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
   </div>
 
   <div id="second-settings-modal" class="modal hidden second-modal">
@@ -847,7 +847,7 @@ function renderPokedex(key, filter = "all") {
     </div>
 
     <div class="copyright-container">
-      <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
+      <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
     </div>
 
     <div id="second-settings-modal" class="modal hidden second-modal">
