@@ -1,7 +1,7 @@
 const pokedexes = {
   pokedex: {
     title: "Normal Pokedex",
-    total: 902,
+    total: 904,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -816,6 +816,8 @@ const pokedexes = {
   { name: "Eldegoss", number: "0830", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/830.png", caught: false },
   { name: "Wooloo", number: "0831", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/831.png", caught: false },
   { name: "Dubwool", number: "0832", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/832.png", caught: false },
+  { name: "Yamper", number: "0835", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/835.png", caught: false },
+  { name: "Boltund", number: "0836", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/836.png", caught: false },
   { name: "Applin", number: "0840", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/840.png", caught: false },
   { name: "Flapple", number: "0841", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/841.png", caught: false },
   { name: "Appletun", number: "0842", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/842.png", caught: false },
@@ -1738,7 +1740,7 @@ const pokedexes = {
   },
   lucky: {
     title: "Lucky Pokedex",
-    total: 886,
+    total: 888,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -2538,6 +2540,8 @@ const pokedexes = {
   { name: "Eldegoss", number: "0830", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/830.png", caught: false },
   { name: "Wooloo", number: "0831", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/831.png", caught: false },
   { name: "Dubwool", number: "0832", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/832.png", caught: false },
+  { name: "Yamper", number: "0835", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/835.png", caught: false },
+  { name: "Boltund", number: "0836", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/836.png", caught: false },
   { name: "Applin", number: "0840", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/840.png", caught: false },
   { name: "Flapple", number: "0841", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/841.png", caught: false },
   { name: "Appletun", number: "0842", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/842.png", caught: false },
@@ -2842,7 +2846,7 @@ const pokedexes = {
   },
   perfect: {
     title: "Perfect Pokedex",
-    total: 902,
+    total: 904,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -3657,6 +3661,8 @@ const pokedexes = {
   { name: "Eldegoss", number: "0830", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/830.png", caught: false },
   { name: "Wooloo", number: "0831", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/831.png", caught: false },
   { name: "Dubwool", number: "0832", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/832.png", caught: false },
+  { name: "Yamper", number: "0835", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/835.png", caught: false },
+  { name: "Boltund", number: "0836", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/836.png", caught: false },
   { name: "Applin", number: "0840", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/840.png", caught: false },
   { name: "Flapple", number: "0841", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/841.png", caught: false },
   { name: "Appletun", number: "0842", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/842.png", caught: false },
@@ -4579,7 +4585,7 @@ const pokedexes = {
   },
   XXL: {
     title: "XXL Pokedex",
-    total: 902,
+    total: 904,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -5394,6 +5400,8 @@ const pokedexes = {
   { name: "Eldegoss", number: "0830", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/830.png", caught: false },
   { name: "Wooloo", number: "0831", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/831.png", caught: false },
   { name: "Dubwool", number: "0832", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/832.png", caught: false },
+  { name: "Yamper", number: "0835", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/835.png", caught: false },
+  { name: "Boltund", number: "0836", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/836.png", caught: false },
   { name: "Applin", number: "0840", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/840.png", caught: false },
   { name: "Flapple", number: "0841", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/841.png", caught: false },
   { name: "Appletun", number: "0842", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/842.png", caught: false },
@@ -5487,7 +5495,7 @@ const pokedexes = {
   },
   XXS: {
     title: "XXS Pokedex",
-    total: 902,
+    total: 904,
     data: [
       { name: "Bulbasaur", number: "0001", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", caught: false },
       { name: "Ivysaur", number: "0002", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", caught: false },
@@ -6302,6 +6310,8 @@ const pokedexes = {
   { name: "Eldegoss", number: "0830", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/830.png", caught: false },
   { name: "Wooloo", number: "0831", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/831.png", caught: false },
   { name: "Dubwool", number: "0832", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/832.png", caught: false },
+  { name: "Yamper", number: "0835", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/835.png", caught: false },
+  { name: "Boltund", number: "0836", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/836.png", caught: false },
   { name: "Applin", number: "0840", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/840.png", caught: false },
   { name: "Flapple", number: "0841", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/841.png", caught: false },
   { name: "Appletun", number: "0842", img: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/842.png", caught: false },
