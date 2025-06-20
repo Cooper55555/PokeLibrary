@@ -12,8 +12,26 @@ document.addEventListener("DOMContentLoaded", () => {
       regionBreaks = REGION_BREAKS_SHINYGIGANTAMAX;
     } else if (key === "gofest") {
       regionBreaks = REGION_BREAKS_GOFEST;
+    } else if (key === "lucky") {
+      regionBreaks = REGION_BREAKS_LUCKY;
     } else if (key === "shinydynamax") {
       regionBreaks = REGION_BREAKS_SHINYDYNAMAX;
+    } else if (key === "shadow") {
+      regionBreaks = REGION_BREAKS_SHADOW;
+    } else if (key === "purified") {
+      regionBreaks = REGION_BREAKS_PURIFIED;
+    } else if (key === "shiny") {
+      regionBreaks = REGION_BREAKS_SHINY;
+    } else if (key === "perfectshiny") {
+      regionBreaks = REGION_BREAKS_PERFECTSHINY;
+    } else if (key === "shadowshiny") {
+      regionBreaks = REGION_BREAKS_SHADOWSHINY;
+    } else if (key === "purifiedshiny") {
+      regionBreaks = REGION_BREAKS_PURIFIEDSHINY;
+    } else if (key === "perfectshadow") {
+      regionBreaks = REGION_BREAKS_PERFECTSHADOW;
+    } else if (key === "perfectpurified") {
+      regionBreaks = REGION_BREAKS_PERFECTPURIFIED;
     } else {
       regionBreaks = REGION_BREAKS_STANDARD;
     }
@@ -98,7 +116,7 @@ function goHome() {
       </div>
 
       <div id="pokedexes-container">
-        <h1 id="pokedexes-title">Pokémon Go Pokedexes</h1>
+        <h1 id="pokedexes-title">Pokemon Go Pokedexes</h1>
         <div id="pokedexes-section" class="collections">
           ${Object.entries(pokedexes).map(([key, dex]) => `
             <div class="collection-card" onclick="renderPokedex('${key}')">
@@ -113,7 +131,7 @@ function goHome() {
       </div>
 
       <div id="medals-container">
-        <h1 id="medals-title">Pokémon Go Medals</h1>
+        <h1 id="medals-title">Pokemon Go Medals</h1>
         <div id="medals-section" class="collections">
           ${Object.entries(medals).map(([key, dex]) => `
             <div class="collection-card" onclick="renderPokedex('${key}')">
@@ -128,7 +146,7 @@ function goHome() {
       </div>
 
       <div id="events-container">
-        <h1 id="events-title">Pokémon Go Events</h1>
+        <h1 id="events-title">Pokemon Go Events</h1>
         <div id="events-section" class="collections">
           ${Object.entries(events).map(([key, dex]) => `
             <div class="collection-card" onclick="renderPokedex('${key}')">
@@ -143,7 +161,7 @@ function goHome() {
       </div>
 
       <div class="copyright-container">
-        <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
+        <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
       </div>
 
       <div id="settings-modal" class="modal hidden">
@@ -211,7 +229,7 @@ const tcgHTML = `
         <i class="fas fa-cog settings-icon" onclick="toggleTCGSettingsModal()"></i>
       </div>
       <div id="tcgset-container">
-    <h1 id="tcgsets-title">Pokémon TCG Pocket Sets</h1>
+    <h1>Pokemon TCG Pocket Sets</h1>
     <div id="tcg-sets-section" class="collections">
       ${Object.entries(tcgSets).map(([key, set]) => `
         <div class="collection-card" onclick="renderTCGSet('${key}')">
@@ -225,7 +243,7 @@ const tcgHTML = `
     </div>
   </div>
       <div class="copyright-container">
-        <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
+        <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
       </div>
   </div>
 
@@ -278,7 +296,7 @@ const tcgHTML = `
     <i class="fas fa-cog settings-icon" onclick="toggleCardHomeSettingsModal()"></i>
   </div>
   <div id="baseset-container">
-    <h1 id="baseset-title">Pokémon Cards Base Set Series</h1>
+    <h1>Pokemon Cards Base Set Series</h1>
   <div id="card-sets-section" class="collections">
     ${Object.entries(cardSets).map(([key, set]) => `
       <div class="collection-card" onclick="renderCardSet('${key}')">
@@ -293,7 +311,7 @@ const tcgHTML = `
 </div>
 
   <div class="copyright-container">
-    <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
+    <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
   </div>
 
 <div id="card-home-settings-modal" class="modal hidden">
@@ -397,32 +415,24 @@ function toggleSettingsModal() {
 document.addEventListener("DOMContentLoaded", () => {
   const translations = {
     en: {
-      pokedexesTitle: "Pokémon Go Pokedexes",
-      medalsTitle: "Pokémon Go Medals",
-      eventsTitle: "Pokémon Go Events",
-      basesetTitle: "Pokémon Cards Base Set Series",
-      tcgsetsTitle: "Pokémon TCG Pocket Sets",
+      pokedexesTitle: "Pokemon Go Pokedexes",
+      medalsTitle: "Pokemon Go Medals",
+      eventsTitle: "Pokemon Go Events"
     },
     es: {
       pokedexesTitle: "Pokédex de Pokémon Go",
       medalsTitle: "Medallas de Pokémon Go",
-      eventsTitle: "Eventos de Pokémon Go",
-      basesetTitle: "Serie base de cartas Pokémon",
-      tcgsetsTitle: "Sets de bolsillo de JCC Pokémon",
+      eventsTitle: "Eventos de Pokémon Go"
     },
     fr: {
       pokedexesTitle: "Pokédex Pokémon Go",
       medalsTitle: "Médailles Pokémon Go",
-      eventsTitle: "Événements Pokémon Go",
-      basesetTitle: "Série de cartes Pokémon de base",
-      tcgsetsTitle: "Coffrets de poche du JCC Pokémon",
+      eventsTitle: "Événements Pokémon Go"
     },
     de: {
       pokedexesTitle: "Pokémon Go Pokédexe",
       medalsTitle: "Pokémon Go Medaillen",
-      eventsTitle: "Pokémon Go Ereignisse",
-      basesetTitle: "Pokemon Karten Basisset Serie",
-      tcgsetsTitle: "Pokémon Sammelkartenspiel Taschensets",
+      eventsTitle: "Pokémon Go Ereignisse"
     }
   };
 
@@ -434,50 +444,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const pokedexTitle = document.getElementById("pokedexes-title");
     const medalsTitle = document.getElementById("medals-title");
     const eventsTitle = document.getElementById("events-title");
-    const basesetTitle = document.getElementById("baseset-title");
-    const tcgsetsTitle = document.getElementById("tcgsets-title");
 
     if (pokedexTitle) pokedexTitle.textContent = translation.pokedexesTitle;
     if (medalsTitle) medalsTitle.textContent = translation.medalsTitle;
     if (eventsTitle) eventsTitle.textContent = translation.eventsTitle;
-    if (basesetTitle) basesetTitle.textContent = translation.basesetTitle;
-    if (tcgsetsTitle) tcgsetsTitle.textContent = translation.tcgsetsTitle;
 
     localStorage.setItem("language", lang);
     langSelect.value = lang;
   }
 
-  const languageSelectors = document.querySelectorAll("#language");
-
-  function setLanguage(lang) {
-    const translation = translations[lang] || translations.en;
-
-    // Update headings
-    document.getElementById("pokedexes-title").textContent = translation.pokedexesTitle;
-    document.getElementById("medals-title").textContent = translation.medalsTitle;
-    document.getElementById("events-title").textContent = translation.eventsTitle;
-    document.getElementById("baseset-title").textContent = translation.basesetTitle;
-    document.getElementById("tcgsets-title").textContent = translation.tcgsetsTitle;
-
-    // Sync all language selects
-    languageSelectors.forEach(select => {
-      select.value = lang;
-    });
-
-    // Save to localStorage
-    localStorage.setItem("language", lang);
-  }
-
-  // Set language from saved preference or default
-  const savedLang = localStorage.getItem("language") || "en";
-  setLanguage(savedLang);
-
-  // Attach listener to all language dropdowns
-  languageSelectors.forEach(select => {
-    select.addEventListener("change", (e) => {
+  if (langSelect) {
+    langSelect.addEventListener("change", (e) => {
       setLanguage(e.target.value);
     });
-  });
+  }
+
+  const savedLang = localStorage.getItem("language") || "en";
+  setLanguage(savedLang);
 });
 
 function toggleDarkMode() {
@@ -573,7 +556,7 @@ function renderCardSet(setKey, filter = "all") {
     </div>
     <div class="pokedex-grid">${cardsHTML}</div>
     <div class="copyright-container">
-      <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
+      <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
     </div>
 
     <div id="card-settings-modal" class="modal hidden">
@@ -701,7 +684,7 @@ app.innerHTML = `
   <div class="pokedex-grid">${cardsHTML}</div>
 
   <div class="copyright-container">
-    <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
+    <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
   </div>
 
   <div id="second-settings-modal" class="modal hidden second-modal">
@@ -847,7 +830,7 @@ function renderPokedex(key, filter = "all") {
     </div>
 
     <div class="copyright-container">
-      <h5>© 2025 DataLibrary. This website has been made by Cooper and Pepper.</h5>
+      <h5>© 2025 PokeLibrary. This website has been made by Cooper and Pepper.</h5>
     </div>
 
     <div id="second-settings-modal" class="modal hidden second-modal">
@@ -1184,10 +1167,118 @@ const REGION_BREAKS_STANDARD = [
   { name: "Unova", index: 490 },
   { name: "Kalos", index: 646 },
   { name: "Alola", index: 715 },
-  { name: "Galar", index: 790 },
-  { name: "Hisui", index: 839 },
-  { name: "Paldea", index: 845 },
-  { name: "Unidentified", index: 895 },
+  { name: "Galar", index: 793 },
+  { name: "Hisui", index: 844 },
+  { name: "Paldea", index: 850 },
+  { name: "Unidentified", index: 900 },
+];
+
+const REGION_BREAKS_SHINY = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 151 },
+  { name: "Hoenn", index: 251 },
+  { name: "Sinnoh", index: 386 },
+  { name: "Unova", index: 490 },
+  { name: "Kalos", index: 644 },
+  { name: "Alola", index: 707 },
+  { name: "Galar", index: 771 },
+  { name: "Hisui", index: 788 },
+  { name: "Paldea", index: 793 },
+  { name: "Unidentified", index: 821 },
+];
+
+const REGION_BREAKS_PERFECTSHINY = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 151 },
+  { name: "Hoenn", index: 251 },
+  { name: "Sinnoh", index: 386 },
+  { name: "Unova", index: 490 },
+  { name: "Kalos", index: 644 },
+  { name: "Alola", index: 707 },
+  { name: "Galar", index: 771 },
+  { name: "Hisui", index: 788 },
+  { name: "Paldea", index: 793 },
+  { name: "Unidentified", index: 821 },
+];
+
+const REGION_BREAKS_SHADOWSHINY = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 66 },
+  { name: "Hoenn", index: 87 },
+  { name: "Sinnoh", index: 116 },
+  { name: "Galar", index: 128 },
+  { name: "Hisui", index: 129 },
+];
+
+const REGION_BREAKS_PURIFIEDSHINY = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 66 },
+  { name: "Hoenn", index: 87 },
+  { name: "Sinnoh", index: 116 },
+  { name: "Galar", index: 128 },
+  { name: "Hisui", index: 129 },
+];
+
+const REGION_BREAKS_LUCKY = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 150 },
+  { name: "Hoenn", index: 249 },
+  { name: "Sinnoh", index: 382 },
+  { name: "Unova", index: 484 },
+  { name: "Kalos", index: 636 },
+  { name: "Alola", index: 701 },
+  { name: "Galar", index: 778 },
+  { name: "Hisui", index: 828 },
+  { name: "Paldea", index: 834 },
+  { name: "Unidentified", index: 884 },
+];
+
+const REGION_BREAKS_SHADOW = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 114 },
+  { name: "Hoenn", index: 176 },
+  { name: "Sinnoh", index: 257 },
+  { name: "Unova", index: 316 },
+  { name: "Kalos", index: 380 },
+  { name: "Galar", index: 388 },
+  { name: "Hisui", index: 389 },
+  { name: "Paldea", index: 391 },
+];
+
+const REGION_BREAKS_PERFECTSHADOW = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 114 },
+  { name: "Hoenn", index: 176 },
+  { name: "Sinnoh", index: 257 },
+  { name: "Unova", index: 316 },
+  { name: "Kalos", index: 380 },
+  { name: "Galar", index: 388 },
+  { name: "Hisui", index: 389 },
+  { name: "Paldea", index: 391 },
+];
+
+const REGION_BREAKS_PERFECTPURIFIED = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 114 },
+  { name: "Hoenn", index: 176 },
+  { name: "Sinnoh", index: 257 },
+  { name: "Unova", index: 316 },
+  { name: "Kalos", index: 380 },
+  { name: "Galar", index: 388 },
+  { name: "Hisui", index: 389 },
+  { name: "Paldea", index: 391 },
+];
+
+const REGION_BREAKS_PURIFIED = [
+  { name: "Kanto", index: 0 },
+  { name: "Johto", index: 114 },
+  { name: "Hoenn", index: 176 },
+  { name: "Sinnoh", index: 257 },
+  { name: "Unova", index: 316 },
+  { name: "Kalos", index: 380 },
+  { name: "Galar", index: 388 },
+  { name: "Hisui", index: 389 },
+  { name: "Paldea", index: 391 },
 ];
 
 const REGION_BREAKS_GOFEST = [
@@ -1223,8 +1314,9 @@ const REGION_BREAKS_MEGA = [
   { name: "Kanto", index: 0 },
   { name: "Johto", index: 13 },
   { name: "Hoenn", index: 19 },
-  { name: "Sinnoh", index: 35 },
-  { name: "Kalos", index: 38 },
+  { name: "Sinnoh", index: 38 },
+  { name: "Unova", index: 43 },
+  { name: "Kalos", index: 44 },
 ];
 
 function downloadPDF(key) {
