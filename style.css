@@ -793,12 +793,11 @@ body.dark-mode {
     margin-top: 1rem;
   }
 
-  .nav-btn, .back-button {
-    padding: 0.5rem 1rem;
+  .nav-btn {
     font-size: 0.9rem;
   }
 
-  .nav-btn span, .back-button span {
+  .nav-btn span {
     display: none;
   }
 
@@ -862,18 +861,6 @@ body.dark-mode {
   .item-card img {
     width: 50px;
     height: 50px;
-  }
-
-  .navbar {
-    padding: 0.75rem;
-  }
-
-  .logo-text {
-    font-size: 1.2rem;
-  }
-
-  .logo-icon {
-    font-size: 1.5rem;
   }
 }
 
